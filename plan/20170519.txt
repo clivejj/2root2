@@ -1,0 +1,17 @@
+Which components constitute core functionality?
+0. Method that takes PriorityQueue and places the queue in different elevators such that the trip is optimized
+1. Prioritized elevator ordering
+2. Algorithm to choose which elevator every user goes to
+3. Some sort of time tracking to later translate to processing.
+
+Big questions/comments:
+1. Must first develop a terminal output to display the optimized elevator before development of graphics.
+2. How to prioritize? (some sort of minimizer for floors visited per elevator, also accout for CEO priority etc)
+
+Timeline:
+May 25th - Method mentioned under ore functionality number 0. completed. This is the core of our idea.
+May 30th - finished with basic elevator class. Hopefully also added some user functionality so user can change
+           number of elevators, users with different priorities etc. Begin work on extra features and processing. 
+June 6 - Finished with project!! We expect some difficulty with the processing, and therefore plan to give ourselves 
+         some extra time to add features and do the processing.
+July - Sell our optimized elevator class for millions of dollars to Google. ;)         
