@@ -64,7 +64,7 @@ Clive :: Added algorithm to proposal for assigning Passengers to an Elevator
 --------------------------------------------------------------
 Both :: Massive planning in class. Many Keys were used.
 Caleb :: Wrote Elevator.java class. Subject to change, but basic idea in place
-Clive :: Added updated plan
+Clive :: Added updated plan, edited Elevator class
 ==============================================================
 
 
