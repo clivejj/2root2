@@ -54,5 +54,13 @@ Clive :: Work on proposal.
 2016-05-18
 --------------------------------------------------------------
 Caleb :: Added first plan. Made devlog.
-Clive ::
+Clive :: Continued brainstorming
+==============================================================
+2016-05-22
+--------------------------------------------------------------
+Both :: Massive planning in class. Keys were used.
+Caleb :: Wrote Elevator.java class. Subject to change, but basic idea in place
+Clive :: Added updated plan
+
+
 
