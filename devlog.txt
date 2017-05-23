@@ -56,11 +56,16 @@ Clive :: Work on proposal.
 Caleb :: Added first plan. Made devlog.
 Clive :: Continued brainstorming
 ==============================================================
+2016-05-21
+--------------------------------------------------------------
+Clive :: Added algorithm to proposal for assigning Passengers to an Elevator
+==============================================================
 2016-05-22
 --------------------------------------------------------------
-Both :: Massive planning in class. Keys were used.
+Both :: Massive planning in class. Many Keys were used.
 Caleb :: Wrote Elevator.java class. Subject to change, but basic idea in place
 Clive :: Added updated plan
+==============================================================
 
 
 
