@@ -1,0 +1,18 @@
+Which components constitute core functionality?
+0. Method for calculating _time until Elevator is on ground floor, ready to accept new Passengers
+1. Assigning Floor _zone to _available Elevators based on _time
+2. Adding/removing Passengers from Elevator
+3. Facilitating the "movement" of the Elevator, which can eventually be translated to processing
+
+Big questions/comments:
+1. Must first develop a terminal output to display the placement of Passengers into their assigned Elevators
+2. How will Elevators "move" and drop off Passengers (how will _time change?)
+
+Timeline:
+May 25th - Elevator class fitted with instance variables, and appropriate accessors and mutators
+May 26th - Completed Passenger class
+May 28th - Complete Core Functionality tasks 0-2
+May 30th - Start Control class which will serve as driver file
+June 2nd - Start work with processing, assuming everything else works
+June 6th - Finished with project!! We expect some difficulty with the processing, and therefore plan to give ourselves some extra time to add features and do the processing.
+July 6th - Sell our optimized elevator class for millions of dollars to Google. ;)         
