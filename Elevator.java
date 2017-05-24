@@ -15,10 +15,6 @@ public class Elevator{
     
     //true if Elevator is going down
     private boolean returning;
-    
-    //private ArrayList<Integer> floorsRemaining; //weird stuff here and below
-    //private ArrayList<Integer> allFloors;
-
     //number of unique floors Elevator will need to go to (based on its Passengers)
     private int numFloors;
     //number of Passengers in riders
@@ -66,14 +62,19 @@ public class Elevator{
     
     public Integer add(Integer a){
         riders.add(a);
+	numPassengers += 1;
 	return a;
 	
     }
     
     public void remove(){
+	int left = 0;
         currFloor = riders.peekMin();
-        while (riders.peekMin() == currFloor)
+        while (riders.peekMin() == currFloor){
             riders.removeMin();
+	    left += 1;
+	}
+	numPassengers -= left;
     }
 
     public boolean isEmpty() {
