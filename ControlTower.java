@@ -44,7 +44,7 @@ public class ControlTower {
 	    else{
 		int prevEl = ellies.get(i-1).getMaxFloor();
 		ellies.get(i).setRange(prevEl+1, prevEl+more);
-		if ((int)(max-(prevEl+more)/(ellies.getSize()-i-1) == max-(prevEl+more)/(ellies.getSize()-i-1)){
+		if ((int)(max-(prevEl+more)/(ellies.getSize()-i-1) == max-(prevEl+more)/(ellies.getSize()-i-1) && more!=(int)floorsPerEl){
 			more-=1;
 		}	
 	    }
