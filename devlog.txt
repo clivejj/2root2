@@ -66,6 +66,12 @@ Both :: Massive planning in class. Many Keys were used.
 Caleb :: Wrote Elevator.java class. Subject to change, but basic idea in place
 Clive :: Added updated plan, edited Elevator class
 ==============================================================
+2016-05-23
+--------------------------------------------------------------
+Both :: Massive planning in class. Many Keys were used.
+Caleb :: Added an assignRange method for when all elevators are free (math gets weird). Put together a nice flow chart
+Clive :: Bashed out a wonderful UML diagram
+==============================================================
 
 
 

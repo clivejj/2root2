@@ -40,7 +40,15 @@ public class Elevator{
     public void setRange(int setMinZone, int setMaxZone) {
 	minZone = setMinZone;
 	maxZone = setMaxZone;
-        
+    }
+    public void setRange(int setMaxZone) {
+	maxZone = setMaxZone;
+    }	
+    public int getMinFloor(){
+	return minZone;
+    }
+    public int getMaxFloor(){
+	return maxZone;
     }
          
     //public ArrayList<Integer> findFloors
