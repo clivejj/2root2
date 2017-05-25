@@ -17,6 +17,10 @@ public class ArrayPriorityQueue<T extends Comparable <T>> {
 	return _data.size() == 0;
     }//O(1)
     
+    public int size(){
+        return _data.size();
+    }
+    
     public T peekMin(){
 	if (isEmpty()){
 	    throw new RuntimeException();
