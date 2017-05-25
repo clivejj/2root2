@@ -56,6 +56,16 @@ public class ArrayPriorityQueue<T extends Comparable <T>> {
 	return _data.toString();
     }
 
+    public boolean contains(T x) {
+	for (T i : _data) {
+	    if (i == x) {
+		return true;
+	    }
+	}
+	return false;
+    }
+	
+
     /*
     public static void main(String[] args){
 	ArrayPriorityQueue<Ticket> bob = new ArrayPriorityQueue<Ticket>();

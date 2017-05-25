@@ -64,17 +64,19 @@ public class Elevator{
 	return timeToEnd;
     }
             
- 
+
     
     public Integer add(Integer a) {
-	//	if (isEmpty()) {
-	//maxFloor = a;
-	//numFloors = 1;
-        riders.add(a);
+        if (a > maxFloor) {
+	    maxFloor = a;
+	}
+	if (!(riders.contains(a))) {
+	    numFloors++;
+	}
+	riders.add(a);
 	return a;
-	
     }
-    
+		
     public void remove(){
         currFloor = riders.peekMin();
         while (riders.peekMin() == currFloor){
@@ -96,6 +98,7 @@ public class Elevator{
 	rtn += "First floor: " + minZone + "\n";
 	rtn += "Last floor: " + maxZone + "\n";
 	rtn += "Time until end: " + timeToEnd;
+	
 	return rtn;
     }
  
