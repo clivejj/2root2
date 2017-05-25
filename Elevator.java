@@ -1,4 +1,5 @@
 import java.util.*;
+import java.lang.*;
 public class Elevator{
     
     private ArrayPriorityQueue<Integer> riders;
@@ -21,7 +22,7 @@ public class Elevator{
     private int numPassengers;
 
     public Elevator() {
-	riders = new ArrayPrioirtyQueue<Integer>();
+	riders = new ArrayPriorityQueue<Integer>();
 	timeToEnd = 0;
 	available = true;
 	currFloor = 0;
@@ -60,12 +61,12 @@ public class Elevator{
         else
             timeToEnd = ((maxFloor - currFloor) * 4) + //4 sec for every floor until it gets to maxFloor
 		(maxFloor * 4) //4 sec for every floor it has to gone down from maxFloor to ground
-		+ numPassengers //1 sec for every Passenger getting off their floor	
-		return timetoEnd;
+		+ numPassengers; //1 sec for every Passenger getting off their floor	
+		return timeToEnd;
     }
             
     public String toString(){
-        return "Time it will take: " + timeToEnd + "Floors that will be visited this trip: " + allFloors;
+        return "Time it will take: " + timeToEnd + "Floors that will be visited this trip: FLOORS VISITED";
     }
     
     public Integer add(Integer a){
