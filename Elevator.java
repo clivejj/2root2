@@ -65,9 +65,7 @@ public class Elevator{
 		return timeToEnd;
     }
             
-    public String toString(){
-        return "Time it will take: " + timeToEnd + "Floors that will be visited this trip: FLOORS VISITED";
-    }
+ 
     
     public Integer add(Integer a){
         riders.add(a);
@@ -90,6 +88,10 @@ public class Elevator{
 	return numPassengers == 0;
     }
         
+    public String toString(){
+        //return "Time it will take: " + timeToEnd + "Floors that will be visited this trip: FLOORS VISITED";
+        return "Number of people: " + riders.size() + "\n" + "First floor: "+ minZone + "\nLast floor: "+ maxZone;   
+    }
  
     //move method??
            
