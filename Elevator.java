@@ -2,7 +2,7 @@ import java.util.*;
 import java.lang.*;
 public class Elevator{
     
-    private ArrayPriorityQueue<Integer> riders;
+    ArrayPriorityQueue<Integer> riders;
     private int timeToEnd;
     private boolean available;
     //ints for min and max floors Elevator will cover
@@ -62,7 +62,7 @@ public class Elevator{
             timeToEnd = ((maxFloor - currFloor) * 4) + //4 sec for every floor until it gets to maxFloor
 		(maxFloor * 4) //4 sec for every floor it has to gone down from maxFloor to ground
 		+ numPassengers; //1 sec for every Passenger getting off their floor	
-		return timeToEnd;
+	return timeToEnd;
     }
             
  
@@ -90,7 +90,7 @@ public class Elevator{
         
     public String toString(){
         //return "Time it will take: " + timeToEnd + "Floors that will be visited this trip: FLOORS VISITED";
-        return "Number of people: " + riders.size() + "\n" + "First floor: "+ minZone + "\nLast floor: "+ maxZone;   
+        return "Number of people: " + numPassengers + "\n" + "First floor: "+ minZone + "\nLast floor: "+ maxZone;   
     }
  
     //move method??
