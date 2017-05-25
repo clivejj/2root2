@@ -52,8 +52,7 @@ public class ControlTower {
     }//end assignRanges()
 
     //adds Passenger to Elevator with corresponding range
-    //will eventually be relocated to Passenger class
-    //also add option for overflow of Elevator
+    //also eventually add option for overflow of Elevator
     public void addPassenger() {
 	Integer toAdd = people.remove(0);
 	for (Elevator i : ellies) {
@@ -62,31 +61,57 @@ public class ControlTower {
 		return;
 	    }
 	}
+    }//end addPassenger()
+    
+    //add all Passengers in people
+    public void addAllPassenger() {
+	int a = people.size();
+	for (int i = 0; i < a; i++) {
+	    addPassenger();
+	}
+    }//end addAllPassenger()
+
+    //calculate timeToEnd for all Elevators in ellie
+    public void calculateAllTime() {
+	for (Elevator i : ellies) {
+	    i.calcTime();
+	}
+    }//end calculateAllTime()
+	
+    //overridden 
+    public String toString() {
+	String rtn = "";
+	 for (int i=0; i<ellies.size(); i++){
+	     rtn += "-------------ELEVATOR" + i + "------------\n";
+	     rtn += ellies.get(i) + "\n";
+	 }
+	 return rtn;
     }
+	
 		    
 	
-	
-	
-    
-    
     public static void main(String[] args){
         ControlTower please = new ControlTower();
         please.assignRanges();
 	System.out.println("After assigning ranges...");
-        for (int i=0; i<please.ellies.size(); i++) {
-            System.out.println(please.ellies.get(i));
-	}
+        System.out.println(please);
 
-	System.out.println("\n\nAfter adding Passengers");
-	//keep a constant, otherwise this will not work
-	int a = please.people.size();
-	for (int i = 0; i < a; i++) {
-	    please.addPassenger();
-	}
+	please.addAllPassenger();
+	System.out.println("After adding Passengers...");
+	System.out.println(please);
+
+	please.calculateAllTime();
+	System.out.println("After calculating time...");
+	System.out.println(please);
+	
+	
+	
+
+	
+
+	
+	
 	    
-	for (int i=0; i<please.ellies.size(); i++) {
-	    System.out.println(please.ellies.get(i));
-	}
     }
     
 }//end class ControlTower

@@ -18,8 +18,6 @@ public class Elevator{
     private boolean returning;
     //number of unique floors Elevator will need to go to (based on its Passengers)
     private int numFloors;
-    //number of Passengers in riders
-    private int numPassengers;
 
     public Elevator() {
 	riders = new ArrayPriorityQueue<Integer>();
@@ -28,7 +26,6 @@ public class Elevator{
 	currFloor = 0;
 	returning = false;
 	numFloors = 0;
-	numPassengers = 0;
     }
 
     //overloaded constructor for when passengers are already known
@@ -57,40 +54,49 @@ public class Elevator{
     //calulates how much time it will take Elevator to reach ground floor
     public int calcTime(){
         if (returning)
-            timeToEnd =  currFloor * 4; //4 sec for every floor
-        else
-            timeToEnd = ((maxFloor - currFloor) * 4) + //4 sec for every floor until it gets to maxFloor
-		(maxFloor * 4) //4 sec for every floor it has to gone down from maxFloor to ground
-		+ numPassengers; //1 sec for every Passenger getting off their floor	
+            timeToEnd = currFloor * 4; //4 sec for every floor
+        else {
+            timeToEnd = ((maxFloor - currFloor) * 3) + //3 sec for every floor until it gets to maxFloor
+		(maxFloor * 3) + //3 sec for every floor it has to gone down from maxFloor to ground
+		(riders.size()) + //1 sec for every Passenger getting off their floor
+		(numFloors * 4); //4 sec for every floor Elevator has to stop at
+	}
 	return timeToEnd;
     }
             
  
     
-    public Integer add(Integer a){
+    public Integer add(Integer a) {
+	//	if (isEmpty()) {
+	//maxFloor = a;
+	//numFloors = 1;
         riders.add(a);
-	numPassengers += 1;
 	return a;
 	
     }
     
     public void remove(){
-	int left = 0;
         currFloor = riders.peekMin();
         while (riders.peekMin() == currFloor){
             riders.removeMin();
-	    left += 1;
 	}
-	numPassengers -= left;
     }
 
     public boolean isEmpty() {
-	return numPassengers == 0;
+	return riders.size() == 0;
+    }
+
+    public boolean isFull() {
+	return riders.size() == 10;
     }
         
     public String toString(){
-        //return "Time it will take: " + timeToEnd + "Floors that will be visited this trip: FLOORS VISITED";
-        return "Number of people: " + numPassengers + "\n" + "First floor: "+ minZone + "\nLast floor: "+ maxZone;   
+        String rtn = "";
+	rtn += "Number of people: " + riders.size() + "\n";
+	rtn += "First floor: " + minZone + "\n";
+	rtn += "Last floor: " + maxZone + "\n";
+	rtn += "Time until end: " + timeToEnd;
+	return rtn;
     }
  
     //move method??
