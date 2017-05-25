@@ -72,6 +72,12 @@ Both :: Massive planning in class. Many Keys were used.
 Caleb :: Added an assignRange method for when all elevators are free (math gets weird). Put together a nice flow chart
 Clive :: Bashed out a wonderful UML diagram
 ==============================================================
+2016-05-24
+--------------------------------------------------------------
+Both :: Debugging at school and home.
+Caleb :: Fixed assigningFloors method in ControlTower. Worked on the driver/data collector (ControlPanel)
+Clive :: Worked on debugging. Added to the driver/data collector.
+==============================================================
 
 
 
