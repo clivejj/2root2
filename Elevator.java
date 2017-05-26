@@ -2,7 +2,7 @@ import java.util.*;
 import java.lang.*;
 public class Elevator{
     
-    ArrayPriorityQueue<Integer> riders;
+    ArrayPriorityQueue<Passenger> riders;
     private int timeToEnd;
     private boolean available;
     //ints for min and max floors Elevator will cover
@@ -20,7 +20,7 @@ public class Elevator{
     private int numFloors;
 
     public Elevator() {
-	riders = new ArrayPriorityQueue<Integer>();
+	riders = new ArrayPriorityQueue<Passenger>();
 	timeToEnd = 0;
 	available = true;
 	currFloor = 0;
@@ -29,9 +29,9 @@ public class Elevator{
     }
 
     //overloaded constructor for when passengers are already known
-    public Elevator(ArrayList<Integer> passengers){
+    public Elevator(ArrayList<Passenger> passengers){
 	this();
-        for (Integer i: passengers)
+        for (Passenger i: passengers)
             riders.add(i); //built by control tower
     }
          
@@ -66,20 +66,19 @@ public class Elevator{
             
 
     
-    public Integer add(Integer a) {
-        if (a > maxFloor) {
-	    maxFloor = a;
+    public void add (Passenger a) {
+        if (a.getDestination() > maxFloor) {
+	    maxFloor = a.getDestination();
 	}
 	if (!(riders.contains(a))) {
 	    numFloors++;
 	}
 	riders.add(a);
-	return a;
     }
 		
     public void remove(){
-        currFloor = riders.peekMin();
-        while (riders.peekMin() == currFloor){
+        currFloor = riders.peekMin().getDestination();
+        while (riders.peekMin().getDestination() == currFloor){
             riders.removeMin();
 	}
     }

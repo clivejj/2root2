@@ -2,27 +2,24 @@ import java.util.*;
 
 public class ControlTower {
     
-    ArrayList<Integer> people;
+    ArrayList<Passenger> people;
     ArrayList<Elevator> ellies;
     int min;
     int max;
+    int maxFloor;
     int time;
+    int numPeople;
+    
 
     public ControlTower(int maxFloor, int numElevators, int numPeople) {
+	maxFloor=maxFloor;
 	time = 0;
-	people = new ArrayList<Integer>();
-	for (int i = 0; i < numPeople; i++) {
-	    people.add((int)(Math.random() * maxFloor)+1);
-	}
 	ellies = new ArrayList<Elevator>();
 	for (int i = 0; i < numElevators; i++){
 	    ellies.add(new Elevator());
 	}
-	min = Collections.min(people);
-	max = Collections.max(people);
-	
     }
-
+    
     public int getTime() {
 	return time;
     }
@@ -61,9 +58,9 @@ public class ControlTower {
     //adds Passenger to Elevator with corresponding range
     //also eventually add option for overflow of Elevator
     public void addPassenger() {
-	Integer toAdd = people.remove(0);
+	Passenger toAdd = people.remove(0);
 	for (Elevator i : ellies) {
-	    if ((toAdd >= i.getMinFloor()) && (toAdd <= i.getMaxFloor())) {
+	    if ((toAdd.getDestination() >= i.getMinFloor()) && (toAdd.getDestination() <= i.getMaxFloor())) {
 		i.add(toAdd);
 		return;
 	    }
@@ -88,37 +85,38 @@ public class ControlTower {
     //overridden 
     public String toString() {
 	String rtn = "";
-	 for (int i=0; i<ellies.size(); i++){
-	     rtn += "-------------ELEVATOR" + i + "------------\n";
-	     rtn += ellies.get(i) + "\n";
-	 }
-	 return rtn;
+	for (int i=0; i<ellies.size(); i++){
+	    rtn += "-------------ELEVATOR" + i + "------------\n";
+	    rtn += ellies.get(i) + "\n";
+	}
+	return rtn;
     }
 	
 		    
 	
     public static void main(String[] args){
         ControlTower please = new ControlTower(34, 7, 40);
-        please.assignRanges();
-	System.out.println("After assigning ranges...");
-        System.out.println(please);
+        //please.assignRanges();
+	//System.out.println("After assigning ranges...");
+	// System.out.println(please);
 
-	please.addAllPassenger();
-	System.out.println("After adding Passengers...");
-	System.out.println(please);
+	//	please.addAllPassenger();
+	//System.out.println("After adding Passengers...");
+	//System.out.println(please);
 
-	please.calculateAllTime();
-	System.out.println("After calculating time...");
-	System.out.println(please);
-	
-	
-	
+	//please.calculateAllTime();
+	//System.out.println("After calculating time...");
+	//System.out.println(please);
 
-	
-
-	
-	
-	    
+	while (true) {
+	    please.people = new ArrayList<Passenger>();
+	    for (int i = 0; i < please.numPeople; i++) {
+		int dest = (int)(Math.random() * please.maxFloor) + 1;
+		please.people.add(new Passenger(dest, please));
+	    }
+	    //please.min = Collections.min(please.people);
+	    //please.max = Collections.max(please.people);
+	}
     }
     
 }//end class ControlTower
