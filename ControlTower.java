@@ -6,18 +6,25 @@ public class ControlTower {
     ArrayList<Elevator> ellies;
     int min;
     int max;
+    int time;
 
-    public ControlTower() {
+    public ControlTower(int maxFloor, int numElevators, int numPeople) {
+	time = 0;
 	people = new ArrayList<Integer>();
-	for (int i = 0; i < 40; i++) {
-	    people.add((int)(Math.random() * 34)+1);
+	for (int i = 0; i < numPeople; i++) {
+	    people.add((int)(Math.random() * maxFloor)+1);
 	}
 	ellies = new ArrayList<Elevator>();
-	for (int i = 0; i < 7; i++){
+	for (int i = 0; i < numElevators; i++){
 	    ellies.add(new Elevator());
 	}
 	min = Collections.min(people);
-	max = Collections.max(people);   
+	max = Collections.max(people);
+	
+    }
+
+    public int getTime() {
+	return time;
     }
 
     //assigns ranges to Elevator based on range of floors, and number of Elevators
@@ -91,7 +98,7 @@ public class ControlTower {
 		    
 	
     public static void main(String[] args){
-        ControlTower please = new ControlTower();
+        ControlTower please = new ControlTower(34, 7, 40);
         please.assignRanges();
 	System.out.println("After assigning ranges...");
         System.out.println(please);
