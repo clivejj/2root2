@@ -27,7 +27,7 @@ public class Elevator{
 	returning = false;
 	numFloors = 0;
     }
-    /* TEST
+    /* Test to make sure assignRanges() works for unavailable Elevators too
     public Elevator(boolean test) {
 	this();
 	available = false;

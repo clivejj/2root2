@@ -23,7 +23,7 @@ public class ControlTower {
 	//populate ellies with numElevators Elevators
 	ellies = new ArrayList<Elevator>();
 	for (int i = 0; i < numElevators; i++){
-	    //TEST
+	    //Test to make sure assignRanges() works for unavailable Elevators too
 	    //if (i == 3) {
 	    //	ellies.add(new Elevator(false));
 	    //}
@@ -43,7 +43,8 @@ public class ControlTower {
 	return time;
     }
 
-    //assigns ranges to Elevator based on range of floors, and number of Elevators
+    //assigns ranges to Elevator based on range of floors, and number of Elevators that are available
+    
     public void assignRanges() {
 	//ArrayList contains the indices of the Elevators in ellies that are available
 	ArrayList<Integer>indexOfAvailElevators = new ArrayList<Integer>();
