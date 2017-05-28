@@ -16,8 +16,12 @@ public class Elevator{
     
     //true if Elevator is going down
     private boolean returning;
-    //number of unique floors Elevator will need to go to (based on its Passengers)
+    
+    //number of unique floors Elevator will need to go to
     private int numFloors;
+
+    //true if Elevator is moving
+    private boolean moving;
 
     public Elevator() {
 	riders = new ArrayPriorityQueue<Passenger>();
@@ -26,6 +30,7 @@ public class Elevator{
 	currFloor = 0;
 	returning = false;
 	numFloors = 0;
+	moving = false;
     }
     /* Test to make sure assignRanges() works for unavailable Elevators too
     public Elevator(boolean test) {
@@ -72,8 +77,9 @@ public class Elevator{
     }
             
 
-    
-    public void add (Passenger a) {
+    //add Passenger to riders, and mantain maxFloor, and numFloors
+    public Passenger add (Passenger a, int time) {
+	//if Elevator is not full, add Passenger
         if (a.getDestination() > maxFloor) {
 	    maxFloor = a.getDestination();
 	}
@@ -81,6 +87,17 @@ public class Elevator{
 	    numFloors++;
 	}
 	riders.add(a);
+	//if Elevator is now full, mark it unavailable, and record waitTime of Passengers
+	if (isFull()) {
+	    available = false;
+	    for (Passenger i : riders.getData()) {
+		i.setWaitTime(time);
+	    }
+	    moving = true;
+	    //return null to show that a new assignRanges() is needed
+	    return null;
+	}
+	return a;
     }
 		
     public void remove(){

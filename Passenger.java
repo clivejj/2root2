@@ -27,6 +27,10 @@ public class Passenger implements Comparable<Passenger> {
     public String toString() {
 	return "" +  destination;
     }
+
+    public void setWaitTime(int setWaitTime) {
+	waitTime = setWaitTime;
+    }
 }
     
     

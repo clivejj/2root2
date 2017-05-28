@@ -43,16 +43,21 @@ public class ControlTower {
 	return time;
     }
 
-    //assigns ranges to Elevator based on range of floors, and number of Elevators that are available
-    
-    public void assignRanges() {
-	//ArrayList contains the indices of the Elevators in ellies that are available
+    //returns ArrayList containing the indices of the Elevators in ellies that are available
+    public ArrayList<Integer> indexOfAvailElevators() {
 	ArrayList<Integer>indexOfAvailElevators = new ArrayList<Integer>();
 	for (int i = 0; i < ellies.size(); i++) {
 	    if (ellies.get(i).available) {
 		indexOfAvailElevators.add(i);
 	    }
 	}
+	return indexOfAvailElevators;
+    }
+
+    //assigns ranges to Elevator based on range of floors, and number of Elevators that are available
+    public void assignRanges() {
+	//ArrayList contains the indices of the Elevators in ellies that are available
+	ArrayList<Integer>indexOfAvailElevators = indexOfAvailElevators();
 	
     	double floorsPerEl = (max-min+1.0)/indexOfAvailElevators.size(); //need 1.0 to make it a double
 	if ((int)floorsPerEl == floorsPerEl){    //if floors are divisible by num of elevators   
@@ -87,9 +92,15 @@ public class ControlTower {
     //also eventually add option for overflow of Elevator
     public void addPassenger() {
 	Passenger toAdd = people.remove(0);
-	for (Elevator i : ellies) {
-	    if ((toAdd.getDestination() >= i.getMinFloor()) && (toAdd.getDestination() <= i.getMaxFloor())) {
-		i.add(toAdd);
+	//ArrayList containing the indices of the Elevators in ellies that are available
+	ArrayList<Integer>indexOfAvailElevators = indexOfAvailElevators();
+	for (Integer i : indexOfAvailElevators) {
+	    //if Passenger's destination is within range of Elevator, add it
+	    if ((toAdd.getDestination() >= ellies.get(i).getMinFloor()) &&
+		(toAdd.getDestination() <= ellies.get(i).getMaxFloor())) {
+		if (ellies.get(i).add(toAdd, getTime()) == null) {
+		    assignRanges();
+		}   
 		return;
 	    }
 	}
@@ -141,7 +152,7 @@ public class ControlTower {
 		    
 	
     public static void main(String[] args){
-        ControlTower please = new ControlTower(34, 7, 40);
+        ControlTower please = new ControlTower(34, 7, 35);
         //please.assignRanges();
 	//System.out.println("After assigning ranges...");
 	// System.out.println(please);

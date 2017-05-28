@@ -64,6 +64,11 @@ public class ArrayPriorityQueue<T extends Comparable <T>> {
 	}
 	return false;
     }
+
+    public ArrayList<T> getData() {
+	return _data;
+    }
+	
 	
 
     /*
