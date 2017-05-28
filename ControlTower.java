@@ -4,20 +4,33 @@ public class ControlTower {
     
     ArrayList<Passenger> people;
     ArrayList<Elevator> ellies;
+    //min and max of the destination of Passengers in people
     int min;
     int max;
+    
+    //how many floors are in the building
     int maxFloor;
-    int time;
+    
+    //how many people are in each wave
     int numPeople;
+
+    //tracks time of system, will constantly be incrememented
+    int time;
     
 
-    public ControlTower(int maxFloor, int numElevators, int numPeople) {
-	maxFloor=maxFloor;
-	time = 0;
+    public ControlTower(int setMaxFloor, int numElevators, int setNumPeople) {
+	people = new ArrayList<Passenger>();
+	//populate ellies with numElevators Elevators
 	ellies = new ArrayList<Elevator>();
 	for (int i = 0; i < numElevators; i++){
 	    ellies.add(new Elevator());
 	}
+	//set preliminary valued for min, and max (to be changed)
+	min = setMaxFloor;
+	max = 0;
+	maxFloor = setMaxFloor;
+	numPeople = setNumPeople;
+	time = 0;
     }
     
     public int getTime() {
@@ -68,7 +81,7 @@ public class ControlTower {
     }//end addPassenger()
     
     //add all Passengers in people
-    public void addAllPassenger() {
+    public void addAllPassengers() {
 	int a = people.size();
 	for (int i = 0; i < a; i++) {
 	    addPassenger();
@@ -76,7 +89,7 @@ public class ControlTower {
     }//end addAllPassenger()
 
     //calculate timeToEnd for all Elevators in ellie
-    public void calculateAllTime() {
+    public void calculateAllTimes() {
 	for (Elevator i : ellies) {
 	    i.calcTime();
 	}
@@ -91,6 +104,24 @@ public class ControlTower {
 	}
 	return rtn;
     }
+
+    //creates new wave of Passengers
+    //places Passengers into assigned Elevators, calculates times
+    public void newWave() {
+	for (int i = 0; i < numPeople; i++) {
+	    int dest = (int)(Math.random() * maxFloor) + 1;
+	    if (dest > max) {
+		max = dest;
+	    }
+	    if (dest < min) {
+		min = dest;
+	    }
+	    people.add(new Passenger(getTime(), dest));
+	}
+	assignRanges();
+	addAllPassengers();
+	calculateAllTimes();
+    }//end newWave()
 	
 		    
 	
@@ -107,16 +138,25 @@ public class ControlTower {
 	//please.calculateAllTime();
 	//System.out.println("After calculating time...");
 	//System.out.println(please);
+		
+	/*please.assignRanges();
+	System.out.println("After assigning ranges...");
+	System.out.println(please);
 
-	while (true) {
-	    please.people = new ArrayList<Passenger>();
-	    for (int i = 0; i < please.numPeople; i++) {
-		int dest = (int)(Math.random() * please.maxFloor) + 1;
-		please.people.add(new Passenger(dest, please));
-	    }
-	    //please.min = Collections.min(please.people);
-	    //please.max = Collections.max(please.people);
+	please.addAllPassenger();
+	System.out.println("After adding Passengers...");
+	System.out.println(please);
+
+	please.calculateAllTime();
+	System.out.println("After calculating time...");
+	System.out.println(please);*/
+
+	please.newWave();
+
+	for (Elevator i : please.ellies) {
+	    System.out.println(i);
 	}
+
     }
     
 }//end class ControlTower

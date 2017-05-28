@@ -5,13 +5,14 @@ public class Passenger implements Comparable<Passenger> {
     public int waitTime;
     public int dropOffTime;
 
-    public Passenger(ControlTower a) {
+    public Passenger(int setBirthTime) {
 	destination =(int)(Math.random() * 34 + 1);
-	birthTime = a.getTime();
+	birthTime = setBirthTime;
     }
-	
-    public Passenger(int setDestination, ControlTower a) {
-	this(a);
+
+    //overloaded constructor when destination is already known
+    public Passenger(int setBirthTime, int setDestination) {
+	this(setBirthTime);
 	destination = setDestination;
     }
 
@@ -21,6 +22,10 @@ public class Passenger implements Comparable<Passenger> {
 
     public int compareTo(Passenger a) {
 	return a.getDestination() - this.getDestination();
+    }
+
+    public String toString() {
+	return "" +  destination;
     }
 }
     
