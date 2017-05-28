@@ -4,7 +4,7 @@ public class Elevator{
     
     ArrayPriorityQueue<Passenger> riders;
     private int timeToEnd;
-    private boolean available;
+    public boolean available;
     //ints for min and max floors Elevator will cover
     private int minZone;
     private int maxZone;
@@ -27,6 +27,12 @@ public class Elevator{
 	returning = false;
 	numFloors = 0;
     }
+    /* TEST
+    public Elevator(boolean test) {
+	this();
+	available = false;
+    }
+    */
 
     //overloaded constructor for when passengers are already known
     public Elevator(ArrayList<Passenger> passengers){
@@ -48,6 +54,7 @@ public class Elevator{
     public int getMaxFloor(){
 	return maxZone;
     }
+    
          
     //public ArrayList<Integer> findFloors
 

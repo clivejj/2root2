@@ -23,7 +23,13 @@ public class ControlTower {
 	//populate ellies with numElevators Elevators
 	ellies = new ArrayList<Elevator>();
 	for (int i = 0; i < numElevators; i++){
+	    //TEST
+	    //if (i == 3) {
+	    //	ellies.add(new Elevator(false));
+	    //}
+	    // else {
 	    ellies.add(new Elevator());
+	    // }
 	}
 	//set preliminary valued for min, and max (to be changed)
 	min = setMaxFloor;
@@ -39,28 +45,36 @@ public class ControlTower {
 
     //assigns ranges to Elevator based on range of floors, and number of Elevators
     public void assignRanges() {
-    	double floorsPerEl = (max-min+1.0)/ellies.size(); //need 1.0 to make it a double
+	//ArrayList contains the indices of the Elevators in ellies that are available
+	ArrayList<Integer>indexOfAvailElevators = new ArrayList<Integer>();
+	for (int i = 0; i < ellies.size(); i++) {
+	    if (ellies.get(i).available) {
+		indexOfAvailElevators.add(i);
+	    }
+	}
+	
+    	double floorsPerEl = (max-min+1.0)/indexOfAvailElevators.size(); //need 1.0 to make it a double
 	if ((int)floorsPerEl == floorsPerEl){    //if floors are divisible by num of elevators   
-	    for (int i = 0; i < ellies.size(); i++){
+	    for (int i = 0; i < indexOfAvailElevators.size(); i++){
 		if (i==0)
-		    ellies.get(i).setRange(min,min+(int)floorsPerEl-1);
+		    ellies.get(indexOfAvailElevators.get(i)).setRange(min,min+(int)floorsPerEl-1);
 		else{
-		    int prevEl = ellies.get(i-1).getMaxFloor();
-		    ellies.get(i).setRange(prevEl+1, prevEl+(int)floorsPerEl);
+		    int prevEl = ellies.get(indexOfAvailElevators.get(i-1)).getMaxFloor();
+		    ellies.get(indexOfAvailElevators.get(i)).setRange(prevEl+1, prevEl+(int)floorsPerEl);
 		}
 	    }
 	}
 	else{
 	    int more = (int)(floorsPerEl+1);
 	    int prevEl=0;
-	    for (int i = 0; i < ellies.size(); i++){
+	    for (int i = 0; i < indexOfAvailElevators.size(); i++){
 		if (i==0)
-		    ellies.get(i).setRange(prevEl+1,prevEl+more);
+		    ellies.get(indexOfAvailElevators.get(i)).setRange(prevEl+1,prevEl+more);
 		else{
-		    prevEl = ellies.get(i-1).getMaxFloor();
-		    ellies.get(i).setRange(prevEl+1, prevEl+more);
+		    prevEl = ellies.get(indexOfAvailElevators.get(i-1)).getMaxFloor();
+		    ellies.get(indexOfAvailElevators.get(i)).setRange(prevEl+1, prevEl+more);
 		}
-		if (more!=(int)floorsPerEl && ( (max-(prevEl+more)) % (ellies.size()-i-1.0) ) == 0){
+		if (more!=(int)floorsPerEl && ( (max-(prevEl+more)) % (indexOfAvailElevators.size()-i-1.0) ) == 0){
 		    //if the number of elevators not assigned an elevator divides ellies remaining evenly, return to normal ellie range assignment
 		    more= (int)( (max-(prevEl+more)) / (ellies.size()-i-1.0) );
 		}
@@ -153,9 +167,7 @@ public class ControlTower {
 
 	please.newWave();
 
-	for (Elevator i : please.ellies) {
-	    System.out.println(i);
-	}
+	System.out.println(please);
 
     }
     
