@@ -77,6 +77,26 @@ Both :: Debugging at school and home.
 Caleb :: Fixed assigningFloors method in ControlTower. Worked on the driver/data collector (ControlPanel)
 Clive :: Worked on debugging. Added to the driver/data collector.
 ==============================================================
+2016-05-25
+--------------------------------------------------------------
+Both :: Debugging at school
+Caleb :: Worked on updating flowchart
+Clive :: Worked on updating UML, flowchart
+==============================================================
+2016-05-26
+--------------------------------------------------------------
+Both :: Debugging at school and home, planning session in class
+Caleb :: 
+Clive :: Worked on primitive Passenger class
+==============================================================
+2016-05-28
+--------------------------------------------------------------
+Caleb :: 
+Clive :: Brought Passenger class into conformity with everything else
+==============================================================
+
+
+
 
 
 
