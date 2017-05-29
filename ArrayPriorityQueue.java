@@ -35,6 +35,10 @@ public class ArrayPriorityQueue<T extends Comparable <T>> {
 	return min;
     }//O(n)
     
+    public T get(int ind){
+    return _data.get(ind);
+    }
+    
     public T removeMin(){
 	if (isEmpty()){
 	    throw new RuntimeException();

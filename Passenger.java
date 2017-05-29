@@ -4,6 +4,7 @@ public class Passenger implements Comparable<Passenger> {
     public int birthTime;
     public int waitTime;
     public int dropOffTime;
+    public int travelTime;
 
     public Passenger(int setBirthTime) {
 	destination =(int)(Math.random() * 34 + 1);
@@ -20,17 +21,22 @@ public class Passenger implements Comparable<Passenger> {
 	return destination;
     }
 
-    public int compareTo(Passenger a) {
-	return a.getDestination() - this.getDestination();
+    public void setWaitTime(int setWaitTime) {
+	waitTime = setWaitTime;
+    }
+
+    public void setTravelTime(int setTravelTime){
+    travelTime = setTravelTime;
+    }
+    
+    public int  compareTo(Passenger a) {
+	return this.getDestination() - a.getDestination();
     }
 
     public String toString() {
 	return "" +  destination;
     }
 
-    public void setWaitTime(int setWaitTime) {
-	waitTime = setWaitTime;
-    }
 }
     
     

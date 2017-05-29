@@ -66,10 +66,10 @@ public class Elevator{
     //calulates how much time it will take Elevator to reach ground floor
     public int calcTime(){
         if (returning)
-            timeToEnd = currFloor * 4; //4 sec for every floor
+            timeToEnd = currFloor * 3; //3 sec for every floor
         else {
             timeToEnd = ((maxFloor - currFloor) * 3) + //3 sec for every floor until it gets to maxFloor
-		(maxFloor * 3) + //3 sec for every floor it has to gone down from maxFloor to ground
+		((maxFloor-1) * 3) + //3 sec for every floor it has to gone down from maxFloor to ground
 		(riders.size()) + //1 sec for every Passenger getting off their floor
 		(numFloors * 4); //4 sec for every floor Elevator has to stop at
 	}
@@ -79,15 +79,8 @@ public class Elevator{
 
     //add Passenger to riders, and mantain maxFloor, and numFloors
     public Passenger add (Passenger a, int time) {
-	//if Elevator is not full, add Passenger
-        if (a.getDestination() > maxFloor) {
-	    maxFloor = a.getDestination();
-	}
-	if (!(riders.contains(a))) {
-	    numFloors++;
-	}
-	riders.add(a);
-	//if Elevator is now full, mark it unavailable, and record waitTime of Passengers
+
+    	//if Elevator is now full, mark it unavailable, and record waitTime of Passengers
 	if (isFull()) {
 	    available = false;
 	    for (Passenger i : riders.getData()) {
@@ -96,8 +89,42 @@ public class Elevator{
 	    moving = true;
 	    //return null to show that a new assignRanges() is needed
 	    return null;
-	}
+	}    
+        //if Elevator is not full, add Passenger
+    else{
+        
+        if (a.getDestination() > maxFloor) {
+	       maxFloor = a.getDestination();
+	   }
+	   if (!(riders.contains(a))) {
+           numFloors++;
+	   }
+	   riders.add(a);
+    }
 	return a;
+    }
+    
+    public int timeForPassenger(Passenger a){
+        int passengersBefore=0;
+        ArrayPriorityQueue<Integer> floorsBefore = new ArrayPriorityQueue<Integer>();
+        int passengersAtFloor=0;
+        for (int i=0; i<riders.size(); i++){
+            if (a.compareTo(riders.get(i)) > 0){
+                passengersBefore += 1;
+                if (!floorsBefore.contains(riders.get(i).getDestination())){
+                    floorsBefore.add(riders.get(i).getDestination());
+                }
+            }
+            else if (a.compareTo(riders.get(i)) == 0){
+                passengersAtFloor += 1;
+            }
+        }
+        int total = ((a.getDestination()-1) * 3) + //3 sec for every floor until it gets to maxFloor
+		(passengersAtFloor/2) + //1 sec for every Passenger getting off their floor. Take the average time as approx
+		(floorsBefore.size() * 4) + //4 sec for every floor Elevator has to stop a
+        passengersBefore; //1 sec for passengers to get off
+        a.setTravelTime(total);
+        return total;
     }
 		
     public void remove(){

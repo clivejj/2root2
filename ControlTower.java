@@ -120,16 +120,6 @@ public class ControlTower {
 	    i.calcTime();
 	}
     }//end calculateAllTime()
-	
-    //overridden 
-    public String toString() {
-	String rtn = "";
-	for (int i=0; i<ellies.size(); i++){
-	    rtn += "-------------ELEVATOR" + i + "------------\n";
-	    rtn += ellies.get(i) + "\n";
-	}
-	return rtn;
-    }
 
     //creates new wave of Passengers
     //places Passengers into assigned Elevators, calculates times
@@ -148,8 +138,17 @@ public class ControlTower {
 	addAllPassengers();
 	calculateAllTimes();
     }//end newWave()
-	
-		    
+    
+    //overridden 
+    public String toString() {
+	String rtn = "";
+	for (int i=0; i<ellies.size(); i++){
+	    rtn += "-------------ELEVATOR" + i + "------------\n";
+	    rtn += ellies.get(i) + "\n";
+	}
+	return rtn;
+    }
+    
 	
     public static void main(String[] args){
         ControlTower please = new ControlTower(34, 7, 35);
@@ -180,7 +179,14 @@ public class ControlTower {
 	please.newWave();
 
 	System.out.println(please);
-
+    for (Elevator gjoa : please.ellies){    
+        for (int i=0; i<gjoa.riders.size(); i++){
+            System.out.print("Target floor:  ");
+            System.out.print(gjoa.riders.get(i).getDestination());
+            System.out.print("   Time: "); 
+            System.out.println(gjoa.timeForPassenger(gjoa.riders.get(i)));
+        }
+    }
     }
     
 }//end class ControlTower
