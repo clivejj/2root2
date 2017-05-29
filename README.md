@@ -1,5 +1,5 @@
 # 2root2
-# Caleb Smith-Salzberg, Clive Johnson
+## Caleb Smith-Salzberg, Clive Johnson
 
 ## Smart Elevator
 Our project aims to model a working version of a smart elevator. The Elevator we have coded is essentially an optimized version of elevators where ranges are assigned (this method is found in many large buildings). Our Elevators have ranges that constantly change depending on the destinations of incoming Passengers, and also on the number of available Elevators. We believe this approach will reduce the travel time of Passengers trying to get to their floors.
