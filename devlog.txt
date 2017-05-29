@@ -96,7 +96,7 @@ Clive :: Brought Passenger class into conformity with everything else
 ==============================================================
 2016-05-29
 --------------------------------------------------------------
-Caleb :: Wroked on README.md
+Caleb :: Worked on README.md
 Clive ::
 ==============================================================
 
