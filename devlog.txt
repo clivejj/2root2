@@ -86,12 +86,12 @@ Clive :: Worked on updating UML, flowchart
 2016-05-26
 --------------------------------------------------------------
 Both :: Debugging at school and home, planning session in class
-Caleb :: 
+Caleb :: Contemplated a potential user interaction and a loop to send more passengers
 Clive :: Worked on primitive Passenger class
 ==============================================================
 2016-05-28
 --------------------------------------------------------------
-Caleb :: 
+Caleb :: Added a timeForEachPassenger method to calculate the time for each passenger in every elevator. This will be a factor in the csv file we plan on producing under simulations.
 Clive :: Brought Passenger class into conformity with everything else
 ==============================================================
 
