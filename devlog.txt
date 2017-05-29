@@ -94,6 +94,11 @@ Clive :: Worked on primitive Passenger class
 Caleb :: Added a timeForEachPassenger method to calculate the time for each passenger in every elevator. This will be a factor in the csv file we plan on producing under simulations.
 Clive :: Brought Passenger class into conformity with everything else
 ==============================================================
+2016-05-29
+--------------------------------------------------------------
+Caleb :: Wroked on README.md
+Clive ::
+==============================================================
 
 
 
