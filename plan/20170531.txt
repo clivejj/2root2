@@ -11,6 +11,7 @@ Which components constitute non-essential functionality?
 Another model Elevator that does not have a range. We could use this as a compasrison to our Elevator.
 
 What is the timeline, and how does it accommodate setbacks, course changes?
+
 6/1: Completed timing mechanism. The code can run with constant waves, and print outputs.
 6/2: Desired data fields are saved to a csv upon each simulation.
 6/5: Processing completed. A real-time graphic shows all the elvator's ranges, and whether or not they are moving.
