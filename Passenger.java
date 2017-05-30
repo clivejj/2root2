@@ -3,7 +3,6 @@ public class Passenger implements Comparable<Passenger> {
     public int destination;
     public int birthTime;
     public int waitTime;
-    public int endWaitTime;
     public int dropOffTime;
     public int travelTime;
     public int totalTime;
@@ -44,7 +43,7 @@ public class Passenger implements Comparable<Passenger> {
     }
     
     public int setTotalTime(){
-        totalTime=endWaitTime-watTime+travelTime;
+        totalTime=waitTime-birthTime+travelTime;
     }
 
 }

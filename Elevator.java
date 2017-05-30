@@ -105,7 +105,6 @@ public class Elevator{
            numFloors++;
 	   }
 	   riders.add(a);
-        a.setEndWaitTime(time);
     }
 	return a;
     }

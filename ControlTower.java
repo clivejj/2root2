@@ -128,6 +128,8 @@ public class ControlTower {
     //creates new wave of Passengers
     //places Passengers into assigned Elevators, calculates times
     public void newWave() {
+        //change control tower to have some randomness and change the numPeople upon every wave. hint: make a mutator method
+        ControlTower please = new ControlTower(40, 7, 60);
 	for (int i = 0; i < numPeople; i++) {
 	    int dest = (int)(Math.random() * maxFloor) + 1;
 	    if (dest > max) {
@@ -148,17 +150,6 @@ public class ControlTower {
 	}
     }//end newWave()
     
-    //overridden 
-    public String toString() {
-	String rtn = "";
-	for (int i=0; i<ellies.size(); i++){
-	    rtn += "-------------ELEVATOR" + i + "------------\n";
-	    rtn += ellies.get(i) + "\n";
-	}
-	return rtn;
-    }
-    
-
     public void loopy(int timeToEnd) {
 	while (time < timeToEnd) {
 	    if (time % (150 + (int) (Math.random() * 40)) == 0) {
@@ -176,9 +167,21 @@ public class ControlTower {
 	    time++;
 
 	}
+        
+        
+    //overridden 
+    public String toString() {
+	String rtn = "";
+	for (int i=0; i<ellies.size(); i++){
+	    rtn += "-------------ELEVATOR" + i + "------------\n";
+	    rtn += ellies.get(i) + "\n";
+	}
+	return rtn;
+    }
     public static void main(String[] args){
-        ControlTower please = new ControlTower(40, 7, 60);
-	please.newWave();
+        loopy(3600);
+        //ControlTower please = new ControlTower(40, 7, 60);
+	//please.newWave();
 
 	    
 	    
