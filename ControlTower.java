@@ -138,10 +138,9 @@ public class ControlTower {
 	    }
 	    people.add(new Passenger(getTime(), dest));
 	}
-	//System.out.println(people);
-	assignRanges();
-	addAllPassengers();
-	calculateAllTimes();
+	//assignRanges();
+	//addAllPassengers();
+	//calculateAllTimes();
 	//add Passengers from leftover back to people
 	int a = leftover.size();
 	for (int i = 0; i < a; i++) {
@@ -159,34 +158,30 @@ public class ControlTower {
 	return rtn;
     }
     
-	
+
+    public void loopy(int timeToEnd) {
+	while (time < timeToEnd) {
+	    if (time % (150 + (int) (Math.random() * 40)) == 0) {
+		newWave();
+	    }
+	    ArrayList<Integer> indexOfAvailElevators = indexOfAvailElevators();
+	    if (indexOfAvailElevators.size() >= 4) {
+		assignRanges();
+
+		
+	    
+
+
+
+	    time++;
+
+	}
     public static void main(String[] args){
         ControlTower please = new ControlTower(40, 7, 60);
-        //please.assignRanges();
-	//System.out.println("After assigning ranges...");
-	// System.out.println(please);
-
-	//	please.addAllPassenger();
-	//System.out.println("After adding Passengers...");
-	//System.out.println(please);
-
-	//please.calculateAllTime();
-	//System.out.println("After calculating time...");
-	//System.out.println(please);
-		
-	/*please.assignRanges();
-	System.out.println("After assigning ranges...");
-	System.out.println(please);
-
-	please.addAllPassenger();
-	System.out.println("After adding Passengers...");
-	System.out.println(please);
-
-	please.calculateAllTime();
-	System.out.println("After calculating time...");
-	System.out.println(please);*/
-
 	please.newWave();
+
+	    
+	    
 
 	System.out.println(please);
 	for (Elevator gjoa : please.ellies){    
@@ -197,7 +192,6 @@ public class ControlTower {
             System.out.println(gjoa.timeForPassenger(gjoa.riders.get(i)));*/
 	    System.out.println(gjoa.riders);
 	}
-	//System.out.println(please.people);
     }
     
 }//end class ControlTower
