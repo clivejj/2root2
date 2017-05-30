@@ -23,6 +23,9 @@ public class Elevator{
     //true if Elevator is moving
     private boolean moving;
 
+    //time that Elevator starts moving
+    private int moveTime;
+
     public Elevator() {
 	riders = new ArrayPriorityQueue<Passenger>();
 	timeToEnd = 0;
@@ -86,6 +89,8 @@ public class Elevator{
 	    for (Passenger i : riders.getData()) {
 		i.setWaitTime(time);
 	    }
+	    moveTime = time;
+	    
 	    moving = true;
 	    //return null to show that a new assignRanges() is needed
 	    return null;
