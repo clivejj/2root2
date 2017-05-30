@@ -167,7 +167,7 @@ public class ControlTower {
 	    ArrayList<Integer> indexOfAvailElevators = indexOfAvailElevators();
 	    if (indexOfAvailElevators.size() >= 4) {
 		assignRanges();
-
+	    }
 		
 	    
 
