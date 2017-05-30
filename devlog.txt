@@ -96,8 +96,13 @@ Clive :: Brought Passenger class into conformity with everything else
 ==============================================================
 2016-05-29
 --------------------------------------------------------------
-Caleb :: Worked on README.md
+Caleb :: Made README.md
 Clive :: Edited README.md, fixed issue of dealing with leftover Passengers by adding them back to ArrayList people
+==============================================================
+2016-05-30
+--------------------------------------------------------------
+Caleb :: Made new plan
+Clive :: 
 ==============================================================
 
 
