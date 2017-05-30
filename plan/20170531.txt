@@ -1,0 +1,17 @@
+Which jobs are most crucial?
+
+We need to finish implementing the timing functionality into the ControlTower. 
+Once this is complete, we wil be able to run constant waves of people, which will showcase our ELevator's optimization.
+Also, we must decide what data fields should enter the csv file.
+We must implement a real-time processing graphic to display the ranges of the Elevators (using colors and numbers), 
+and whether or not they are moving.
+
+Which components constitute non-essential functionality?
+
+Another model Elevator that does not have a range. We could use this as a compasrison to our Elevator.
+
+What is the timeline, and how does it accommodate setbacks, course changes?
+6/1: Completed timing mechanism. The code can run with constant waves, and print outputs.
+6/2: Desired data fields are saved to a csv upon each simulation.
+6/5: Processing completed. A real-time graphic shows all the elvator's ranges, and whether or not they are moving.
+6/6: Non-essential functionality completed.
