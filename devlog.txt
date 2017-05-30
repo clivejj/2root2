@@ -102,7 +102,7 @@ Clive :: Edited README.md, fixed issue of dealing with leftover Passengers by ad
 2016-05-30
 --------------------------------------------------------------
 Caleb :: Made new plan.	Passenger now has a complete time including wait time and travel time.
-Clive :: 
+Clive :: Helped implement loopy() method in ControlTower
 ==============================================================
 
 
