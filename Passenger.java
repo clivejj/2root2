@@ -3,8 +3,10 @@ public class Passenger implements Comparable<Passenger> {
     public int destination;
     public int birthTime;
     public int waitTime;
+    public int endWaitTime;
     public int dropOffTime;
     public int travelTime;
+    public int totalTime;
 
     public Passenger(int setBirthTime) {
 	destination =(int)(Math.random() * 34 + 1);
@@ -24,6 +26,10 @@ public class Passenger implements Comparable<Passenger> {
     public void setWaitTime(int setWaitTime) {
 	waitTime = setWaitTime;
     }
+    
+    public void setEndWaitTime(int setEndWaitTime) {
+	endWaitTime = setEndWaitTime;
+    }
 
     public void setTravelTime(int setTravelTime){
     travelTime = setTravelTime;
@@ -35,6 +41,10 @@ public class Passenger implements Comparable<Passenger> {
 
     public String toString() {
 	return "" +  destination;
+    }
+    
+    public int setTotalTime(){
+        totalTime=endWaitTime-watTime+travelTime;
     }
 
 }

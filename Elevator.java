@@ -84,10 +84,10 @@ public class Elevator{
     public Passenger add (Passenger a, int time) {
 
     	//if Elevator is now full, mark it unavailable, and record waitTime of Passengers
+    i.setWaitTime(time);
 	if (isFull()) {
 	    available = false;
 	    for (Passenger i : riders.getData()) {
-		i.setWaitTime(time);
 	    }
 	    moveTime = time;
 	    
@@ -105,6 +105,7 @@ public class Elevator{
            numFloors++;
 	   }
 	   riders.add(a);
+        a.setEndWaitTime(time);
     }
 	return a;
     }
