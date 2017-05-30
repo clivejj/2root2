@@ -29,7 +29,7 @@ public class Passenger implements Comparable<Passenger> {
     travelTime = setTravelTime;
     }
     
-    public int  compareTo(Passenger a) {
+    public int compareTo(Passenger a) {
 	return this.getDestination() - a.getDestination();
     }
 

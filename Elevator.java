@@ -69,7 +69,7 @@ public class Elevator{
             timeToEnd = currFloor * 3; //3 sec for every floor
         else {
             timeToEnd = ((maxFloor - currFloor) * 3) + //3 sec for every floor until it gets to maxFloor
-		((maxFloor-1) * 3) + //3 sec for every floor it has to gone down from maxFloor to ground
+		((maxFloor) * 3) + //3 sec for every floor it has to gone down from maxFloor to ground
 		(riders.size()) + //1 sec for every Passenger getting off their floor
 		(numFloors * 4); //4 sec for every floor Elevator has to stop at
 	}

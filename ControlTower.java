@@ -3,6 +3,8 @@ import java.util.*;
 public class ControlTower {
     
     ArrayList<Passenger> people;
+    //contains the Passengers that were not placed into an Elevator during the previous wave
+    ArrayList<Passenger> leftover;
     ArrayList<Elevator> ellies;
     //min and max of the destination of Passengers in people
     int min;
@@ -20,6 +22,7 @@ public class ControlTower {
 
     public ControlTower(int setMaxFloor, int numElevators, int setNumPeople) {
 	people = new ArrayList<Passenger>();
+	leftover = new ArrayList<Passenger>();
 	//populate ellies with numElevators Elevators
 	ellies = new ArrayList<Elevator>();
 	for (int i = 0; i < numElevators; i++){
@@ -89,7 +92,7 @@ public class ControlTower {
     }//end assignRanges()
 
     //adds Passenger to Elevator with corresponding range
-    //also eventually add option for overflow of Elevator
+    //if Elevator with correct floor range is already full, add Passenger back to people
     public void addPassenger() {
 	Passenger toAdd = people.remove(0);
 	//ArrayList containing the indices of the Elevators in ellies that are available
@@ -98,8 +101,9 @@ public class ControlTower {
 	    //if Passenger's destination is within range of Elevator, add it
 	    if ((toAdd.getDestination() >= ellies.get(i).getMinFloor()) &&
 		(toAdd.getDestination() <= ellies.get(i).getMaxFloor())) {
+		//if Passenger cannot be added to Elevator because it is full, add it to leftover
 		if (ellies.get(i).add(toAdd, getTime()) == null) {
-		    assignRanges();
+		    leftover.add(toAdd);
 		}   
 		return;
 	    }
@@ -134,9 +138,15 @@ public class ControlTower {
 	    }
 	    people.add(new Passenger(getTime(), dest));
 	}
+	//System.out.println(people);
 	assignRanges();
 	addAllPassengers();
 	calculateAllTimes();
+	//add Passengers from leftover back to people
+	int a = leftover.size();
+	for (int i = 0; i < a; i++) {
+	    people.add(leftover.remove(0));
+	}
     }//end newWave()
     
     //overridden 
@@ -151,7 +161,7 @@ public class ControlTower {
     
 	
     public static void main(String[] args){
-        ControlTower please = new ControlTower(34, 7, 35);
+        ControlTower please = new ControlTower(40, 7, 60);
         //please.assignRanges();
 	//System.out.println("After assigning ranges...");
 	// System.out.println(please);
@@ -179,14 +189,15 @@ public class ControlTower {
 	please.newWave();
 
 	System.out.println(please);
-    for (Elevator gjoa : please.ellies){    
-        for (int i=0; i<gjoa.riders.size(); i++){
+	for (Elevator gjoa : please.ellies){    
+        /*for (int i=0; i<gjoa.riders.size(); i++){
             System.out.print("Target floor:  ");
             System.out.print(gjoa.riders.get(i).getDestination());
             System.out.print("   Time: "); 
-            System.out.println(gjoa.timeForPassenger(gjoa.riders.get(i)));
-        }
-    }
+            System.out.println(gjoa.timeForPassenger(gjoa.riders.get(i)));*/
+	    System.out.println(gjoa.riders);
+	}
+	//System.out.println(please.people);
     }
     
 }//end class ControlTower

@@ -10,8 +10,21 @@ public class ArrayPriorityQueue<T extends Comparable <T>> {
     }
     
     public void add(T x){
+	if (isEmpty()) {
+	    _data.add(x);
+	    return;
+	}
+	else {
+	    for (int i = 0; i < _data.size(); i++) {
+		if (x.compareTo(_data.get(i)) < 0) {
+		    _data.add(i,x);
+		    return;
+		}
+	    }
+	}
 	_data.add(x);
-    }//O(1)
+    }//O(n)
+	
     
     public boolean isEmpty(){
 	return _data.size() == 0;
@@ -25,15 +38,8 @@ public class ArrayPriorityQueue<T extends Comparable <T>> {
 	if (isEmpty()){
 	    throw new RuntimeException();
 	}
-	T min = _data.get(0);
-	for (int i = 1; i < _data.size(); i ++){
-	    T current = _data.get(i);
-	    if (current.compareTo(min) < 0){
-		min = current;
-	    }
-	}
-	return min;
-    }//O(n)
+	return _data.get(0);
+    }//O(1)
     
     public T get(int ind){
     return _data.get(ind);
@@ -43,18 +49,8 @@ public class ArrayPriorityQueue<T extends Comparable <T>> {
 	if (isEmpty()){
 	    throw new RuntimeException();
 	}
-	T min = _data.get(0);
-	//index which min is located at
-	int index = 0;
-	for (int i = 1; i < _data.size(); i ++){
-	    if (_data.get(i).compareTo(min) < 0){
-		min = _data.get(i);
-		index = i;
-	    }
-	}
-	_data.remove(index);
-	return min;
-    }//O(n)
+	return _data.remove(0);
+    }//O(1)
     
     public String toString(){
 	return _data.toString();
@@ -72,11 +68,10 @@ public class ArrayPriorityQueue<T extends Comparable <T>> {
     public ArrayList<T> getData() {
 	return _data;
     }
-	
-	
 
-    /*
-    public static void main(String[] args){
+    
+    public static void main(String[] args) {
+	/*
 	ArrayPriorityQueue<Ticket> bob = new ArrayPriorityQueue<Ticket>();
 	bob.add(new Ticket(0, 2, "little issue", "Jon"));
 	//System.out.println(bob);
@@ -100,7 +95,18 @@ public class ArrayPriorityQueue<T extends Comparable <T>> {
 	System.out.println(bob2.removeMin());
 	System.out.println(bob2.removeMin());
 	System.out.println(bob2.removeMin());
+	ArrayPriorityQueue<Integer> b = new ArrayPriorityQueue<Integer>();
+	b.add(1);
+	b.add(3);
+	b.add(1);
+	/*b.add(9);
+	b.add(12);
+	b.add(2);
+	b.add(4);
+	b.add(8);
+	b.add(17);
+	System.out.println(b);
+	*/
+	
     }
-    */
-    
 }
