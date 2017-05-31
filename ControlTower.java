@@ -110,6 +110,9 @@ public class ControlTower {
 	for (int i = 0; i < a; i++) {
 	    addPassenger();
 	}
+	for (Elevator i : ellies){
+	    i.setMoveTime(getTime());
+	}
     }//end addAllPassenger()
 
     //calculate timeToEnd for all Elevators in ellie
@@ -145,16 +148,20 @@ public class ControlTower {
 
 	//keep running until time has reached timeToEnd
 	while (time < timeToEnd) {
-	    for (Elevators i : ellie) {
-		if (i
+	    for (Elevator i : ellies) {
+		if (getTime()-i.getMoveTime() == i.calcTime()){
+		    i.available=true;
+		}
+	    }
 	    //if it is time for a new wave, create it, and then assign a new nextWaveTime
 	    if (time == nextWaveTime) {
 		newWave();
-		nextWaveTime += (int) (Math.random() * 40);
+		nextWaveTime += (int) (300 + Math.random() * 100);
 		ArrayList<Integer> a = indexOfAvailElevators();
 		if (a.size() >= 4) {
 		    assignRanges();
 		    addAllPassengers();
+		    System.out.println(this);
 		}
 	    }
 	    time++;

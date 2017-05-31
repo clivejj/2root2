@@ -48,7 +48,13 @@ public class Elevator{
         for (Passenger i: passengers)
             riders.add(i); //built by control tower
     }
-         
+    public void setMoveTime(int setMoveTime){
+	moveTime=setMoveTime;
+    }
+    public int getMoveTime(){
+	return moveTime;
+    }
+     
     public void setRange(int setMinZone, int setMaxZone) {
 	minZone = setMinZone;
 	maxZone = setMaxZone;
