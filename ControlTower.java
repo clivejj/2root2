@@ -26,13 +26,7 @@ public class ControlTower {
 	//populate ellies with numElevators Elevators
 	ellies = new ArrayList<Elevator>();
 	for (int i = 0; i < numElevators; i++){
-	    //Test to make sure assignRanges() works for unavailable Elevators too
-	    //if (i == 3) {
-	    //	ellies.add(new Elevator(false));
-	    //}
-	    // else {
 	    ellies.add(new Elevator());
-	    // }
 	}
 	//set preliminary valued for min, and max (to be changed)
 	min = setMaxFloor;
@@ -56,6 +50,19 @@ public class ControlTower {
 	}
 	return indexOfAvailElevators;
     }
+
+    //returns ArrayList containing the indices of the Elevators in ellies that are both available and empty
+    public ArrayList<Integer> indexOfAvailEmptyElevators() {
+	ArrayList<Integer> a = indexOfAvailElevators();
+	ArrayList<Integer> rtn = new ArrayList<Integer>();
+	for (Integer i : a) {
+	    if (ellies.get(i).isEmpty()) {
+		rtn.add(i);
+	    }
+	}
+	return rtn;
+    }
+	
 
     //assigns ranges to Elevator based on range of floors, and number of Elevators that are available
     public void assignRanges() {
@@ -128,8 +135,6 @@ public class ControlTower {
     //creates new wave of Passengers
     //places Passengers into assigned Elevators, calculates times
     public void newWave() {
-        //change control tower to have some randomness and change the numPeople upon every wave. hint: make a mutator method
-        ControlTower please = new ControlTower(40, 7, 60);
 	for (int i = 0; i < numPeople; i++) {
 	    int dest = (int)(Math.random() * maxFloor) + 1;
 	    if (dest > max) {
@@ -144,29 +149,34 @@ public class ControlTower {
 	//addAllPassengers();
 	//calculateAllTimes();
 	//add Passengers from leftover back to people
-	int a = leftover.size();
-	for (int i = 0; i < a; i++) {
-	    people.add(leftover.remove(0));
-	}
     }//end newWave()
     
     public void loopy(int timeToEnd) {
+	//sets the time for the next wave
+	int nextWaveTime = 0;
+
+	//keep running until time has reached timeToEnd
 	while (time < timeToEnd) {
-	    if (time % (150 + (int) (Math.random() * 40)) == 0) {
+	    //if it is time for a new wave, create it, and then assign a new nextWaveTime
+	    if (time == nextWaveTime) {
 		newWave();
+		nextWaveTime += (int) (Math.random() * 40);
+		ArrayList<Integer> a = indexOfAvailElevators();
+		if (a.size() >= 4) {
+		    assignRanges();
+		}
 	    }
-	    ArrayList<Integer> indexOfAvailElevators = indexOfAvailElevators();
-	    if (indexOfAvailElevators.size() >= 4) {
-		assignRanges();
+	    addAllPassengers();
+	    //add extra Passengers back to people
+	    int a = leftover.size();
+	    for (int i = 0; i < a; i++) {
+		people.add(leftover.remove(0));
 	    }
-		
-	    
-
-
 
 	    time++;
 
 	}
+    }
         
         
     //overridden 
@@ -179,22 +189,22 @@ public class ControlTower {
 	return rtn;
     }
     public static void main(String[] args){
-        loopy(3600);
-        //ControlTower please = new ControlTower(40, 7, 60);
-	//please.newWave();
+        ControlTower please = new ControlTower(40, 7, 60);
+	please.loopy(3600);
 
 	    
 	    
 
-	System.out.println(please);
+	/*System.out.println(please);
 	for (Elevator gjoa : please.ellies){    
-        /*for (int i=0; i<gjoa.riders.size(); i++){
-            System.out.print("Target floor:  ");
-            System.out.print(gjoa.riders.get(i).getDestination());
-            System.out.print("   Time: "); 
-            System.out.println(gjoa.timeForPassenger(gjoa.riders.get(i)));*/
-	    System.out.println(gjoa.riders);
-	}
+	    for (int i=0; i<gjoa.riders.size(); i++){
+		System.out.print("Target floor:  ");
+		System.out.print(gjoa.riders.get(i).getDestination());
+		System.out.print("   Time: "); 
+		System.out.println(gjoa.timeForPassenger(gjoa.riders.get(i)));
+		System.out.println(gjoa.riders);
+	    }
+	    }*/
     }
     
 }//end class ControlTower

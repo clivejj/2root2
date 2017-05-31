@@ -26,9 +26,9 @@ public class Passenger implements Comparable<Passenger> {
 	waitTime = setWaitTime;
     }
     
-    public void setEndWaitTime(int setEndWaitTime) {
-	endWaitTime = setEndWaitTime;
-    }
+    //public void setEndWaitTime(int setEndWaitTime) {
+    //	endWaitTime = setEndWaitTime;
+    //}
 
     public void setTravelTime(int setTravelTime){
     travelTime = setTravelTime;
@@ -44,6 +44,7 @@ public class Passenger implements Comparable<Passenger> {
     
     public int setTotalTime(){
         totalTime=waitTime-birthTime+travelTime;
+	return totalTime;
     }
 
 }
