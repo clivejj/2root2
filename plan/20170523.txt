@@ -1,3 +1,6 @@
+2root2: Caleb Smith-Salzberg and Clive Johnston
+pd5
+
 Which components constitute core functionality?
 0. Method for calculating _time until Elevator is on ground floor, ready to accept new Passengers
 1. Assigning Floor _zone to _available Elevators based on _time
