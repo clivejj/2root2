@@ -146,7 +146,7 @@ public class ControlTower {
 	//keep running until time has reached timeToEnd
 	while (time < timeToEnd) {
 	    for (Elevators i : ellie) {
-		if (i
+		if (i.
 	    //if it is time for a new wave, create it, and then assign a new nextWaveTime
 	    if (time == nextWaveTime) {
 		newWave();
