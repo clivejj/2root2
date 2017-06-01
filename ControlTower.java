@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class ControlTower {
     
@@ -6,6 +7,7 @@ public class ControlTower {
     //contains the Passengers that were not placed into an Elevator during the previous wave
     ArrayList<Passenger> leftover;
     ArrayList<Elevator> ellies;
+    ArrayList<Passenger> toAddToData = new ArrayList<Passenger>();
     //min and max of the destination of Passengers in people
     int min;
     int max;
@@ -153,19 +155,24 @@ public class ControlTower {
 	}
     }//end newWave()
     
-    public void loopy(int timeToEnd) {
+    public void loopy(int timeToEnd, ControlTower a) {
 	//sets the time for the next wave
 	int nextWaveTime = 0;
-
+	ArrayList<Passenger> toAdd = new ArrayList<Passenger>();
+	PrintWriter data = new PrintWriter("test.csv", "UTF-8");
 	//keep running until time has reached timeToEnd
 	while (time < timeToEnd) {
 	    //declare Elevators available and empty() out their Passengers
 	    for (Elevator i : ellies) {
 		if (getTime()-i.getMoveTime() == i.calcTime()){
 		    i.available=true;
-		    i.empty();
+		    toAdd.add(i.empty(a));
 		}
 	    }
+	    /*  for (Integer i : indexOfAvailElevators()){
+		data.println("Elevator" + i);
+		for (Passenger p : i.riders.getData()) {
+	    */	    
 	    //conditional: it is time for a new wave
 	    if (time == nextWaveTime) {
 		//create a new wave and assign a nextWaveTime
@@ -187,6 +194,9 @@ public class ControlTower {
 		    System.out.println("--------------NEW WAVE @ TIME: " + getTime() + "--------------");
 		    System.out.println(this);
 		    
+		    data.println("The first line");
+		    data.println("The second line");
+		    data.close();
 		}
 	    }
 	    time++;
@@ -206,7 +216,8 @@ public class ControlTower {
     
     public static void main(String[] args){
 	ControlTower please = new ControlTower(20, 10, 60);
-	please.loopy(3600);
+	please.loopy(3600, please);
+	System.out.println(please.toAddToData);
     }//end main()
     
 }//end class ControlTower

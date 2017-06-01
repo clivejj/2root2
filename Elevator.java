@@ -105,9 +105,9 @@ public class Elevator{
 	return a;
     }
     
-    public void empty(){ //empty an elevator. Do this when elevator return (all passengers have already exited in 'real' life
+    public void empty(ControlTower a){ //empty an elevator. Do this when elevator return (all passengers have already exited in 'real' life
         while (riders.size()!=0){
-            riders.removeMin();
+            a.toAddToData.add(riders.removeMin());
         }
     }
     
