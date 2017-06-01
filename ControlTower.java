@@ -181,6 +181,9 @@ public class ControlTower {
 		    addAllPassengers();
 		    calculateAllElliesTimes();
 		    calculateAllRidersTimes();
+		    for (Integer i : a) {
+			ellies.get(i).available = false;
+		    }
 		    System.out.println("--------------NEW WAVE @ TIME: " + getTime() + "--------------");
 		    System.out.println(this);
 		    
