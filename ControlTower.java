@@ -151,6 +151,7 @@ public class ControlTower {
 	    for (Elevator i : ellies) {
 		if (getTime()-i.getMoveTime() == i.calcTime()){
 		    i.available=true;
+            i.empty();
 		}
 	    }
 	    //if it is time for a new wave, create it, and then assign a new nextWaveTime
@@ -178,7 +179,7 @@ public class ControlTower {
 	return rtn;
     }
     public static void main(String[] args){
-        ControlTower please = new ControlTower(40, 7, 60);
+        ControlTower please = new ControlTower(20, 10, 60);
 	please.loopy(3600);
     }
     

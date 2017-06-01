@@ -116,6 +116,12 @@ public class Elevator{
 	return a;
     }
     
+    public void empty(){ //empty an elevator. Do this when elevator return (all passengers have already exited in 'real' life
+        while (riders.size()!=0){
+            riders.removeMin();
+        }
+    }
+    
     public int timeForPassenger(Passenger a){
         int passengersBefore=0;
         ArrayPriorityQueue<Integer> floorsBefore = new ArrayPriorityQueue<Integer>();
