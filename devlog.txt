@@ -104,6 +104,11 @@ Clive :: Edited README.md, fixed issue of dealing with leftover Passengers by ad
 Caleb :: Made new plan.	Passenger now has a complete time including wait time and travel time.
 Clive :: Helped implement loopy() method in ControlTower
 ==============================================================
+2016-05-31
+--------------------------------------------------------------
+Caleb :: Updated code so passengers are emptied. General debuggin.
+Clive :: Updated code so elevators only move when they are available. General debugging.
+==============================================================
 
 
 
