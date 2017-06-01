@@ -2,7 +2,7 @@ import java.util.*;
 import java.lang.*;
 public class Elevator{
     
-    ArrayPriorityQueue<Passenger> riders;
+    private ArrayPriorityQueue<Passenger> riders;
     private int timeToEnd;
     public boolean available;
     //ints for min and max floors Elevator will cover
@@ -35,12 +35,6 @@ public class Elevator{
 	numFloors = 0;
 	moving = false;
     }
-    /* Test to make sure assignRanges() works for unavailable Elevators too
-    public Elevator(boolean test) {
-	this();
-	available = false;
-    }
-    */
 
     //overloaded constructor for when passengers are already known
     public Elevator(ArrayList<Passenger> passengers){
@@ -68,9 +62,10 @@ public class Elevator{
     public int getMaxFloor(){
 	return maxZone;
     }
-    
-         
-    //public ArrayList<Integer> findFloors
+
+    public ArrayPriorityQueue<Passenger> getRiders() {
+	return riders;
+    }
 
     //calulates how much time it will take Elevator to reach ground floor
     public int calcTime(){
@@ -89,30 +84,24 @@ public class Elevator{
     //add Passenger to riders, and mantain maxFloor, and numFloors
     public Passenger add (Passenger a, int time) {
 
-    	//if Elevator is now full, mark it unavailable, and record waitTime of Passengers
-  
+    	//if Elevator is full, return null
+	//returning null will tell addPassenger() to add Passenger a to leftover
 	if (isFull()) {
-	    available = false;
-	    for (Passenger i : riders.getData()) {
-		i.setWaitTime(time);
-	    }
-	    moveTime = time;
-	    
-	    moving = true;
-	    //return null to show that a new assignRanges() is needed
 	    return null;
-	}    
-        //if Elevator is not full, add Passenger
-    else{
-        
-        if (a.getDestination() > maxFloor) {
-	       maxFloor = a.getDestination();
-	   }
-	   if (!(riders.contains(a))) {
-           numFloors++;
-	   }
-	   riders.add(a);
-    }
+	}
+	
+        //if Elevator is not full, add Passenger with its corresponding waitTime
+	//update Elevator's maxFloor, and numFloors if needed
+	else{
+	    if (a.getDestination() > maxFloor) {
+		maxFloor = a.getDestination();
+	    }
+	    if (!(riders.contains(a))) {
+		numFloors++;
+	    }
+	    a.setWaitTime(time);
+	    riders.add(a);
+	}
 	return a;
     }
     

@@ -110,17 +110,28 @@ public class ControlTower {
 	for (int i = 0; i < a; i++) {
 	    addPassenger();
 	}
-	for (Elevator i : ellies){
-	    i.setMoveTime(getTime());
+	for (Integer i : indexOfAvailElevators()) {
+	    ellies.get(i).setMoveTime(getTime());
 	}
     }//end addAllPassenger()
 
-    //calculate timeToEnd for all Elevators in ellie
-    public void calculateAllTimes() {
-	for (Elevator i : ellies) {
-	    i.calcTime();
+    //calculate timeToEnd for all available Elevators
+    public void calculateAllElliesTimes() {
+	ArrayList<Integer> a = indexOfAvailElevators();
+	for (Integer i : a) {
+	    ellies.get(i).calcTime();
 	}
     }//end calculateAllTime()
+
+    //calculate travelTime for all riders in available Elevators
+    public void calculateAllRidersTimes() {
+	ArrayList<Integer> a = indexOfAvailElevators();
+	for (Integer i : a) {
+	    for (int p = 0; p < ellies.get(i).getRiders().size(); p++ ) {
+		ellies.get(i).timeForPassenger(ellies.get(i).getRiders().get(p));
+	    }
+	}
+    }
 
     //creates new wave of Passengers
     //places Passengers into assigned Elevators, calculates times
@@ -148,21 +159,31 @@ public class ControlTower {
 
 	//keep running until time has reached timeToEnd
 	while (time < timeToEnd) {
+	    //declare Elevators available and empty() out their Passengers
 	    for (Elevator i : ellies) {
 		if (getTime()-i.getMoveTime() == i.calcTime()){
 		    i.available=true;
-            i.empty();
+		    i.empty();
 		}
 	    }
-	    //if it is time for a new wave, create it, and then assign a new nextWaveTime
+	    //conditional: it is time for a new wave
 	    if (time == nextWaveTime) {
+		//create a new wave and assign a nextWaveTime
 		newWave();
-		nextWaveTime += (int) (300 + Math.random() * 100);
+		nextWaveTime += (int) (Math.random() * 100);
+
+		//ArrayList containing indices of available Elevators within ellies
 		ArrayList<Integer> a = indexOfAvailElevators();
+		//if there are more than 4 available Elevators...
 		if (a.size() >= 4) {
 		    assignRanges();
+		    //add all Passengers, set Elevator's moveTime
 		    addAllPassengers();
+		    calculateAllElliesTimes();
+		    calculateAllRidersTimes();
+		    System.out.println("--------------NEW WAVE @ TIME: " + getTime() + "--------------");
 		    System.out.println(this);
+		    
 		}
 	    }
 	    time++;
@@ -177,11 +198,13 @@ public class ControlTower {
 	    rtn += ellies.get(i) + "\n";
 	}
 	return rtn;
-    }
+    }//end toString()
+
+    
     public static void main(String[] args){
-        ControlTower please = new ControlTower(20, 10, 60);
+	ControlTower please = new ControlTower(20, 10, 60);
 	please.loopy(3600);
-    }
+    }//end main()
     
 }//end class ControlTower
 
