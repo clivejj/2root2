@@ -2,6 +2,7 @@
 ## Caleb Smith-Salzberg, Clive Johnston
 
 ## Smart Elevator
+NOTE: MAKE SURE MIN AND MAX OF CONTROL TOWER ARE BEING UPDATED WEHN PASSENGERS FROM LEFTOVER ARE BEING ADDED TO PASSENGERS
 Our project aims to model a working version of a smart elevator, whereby Passengers are assigned to an Elevator based on their destination. Passengers with the same or similar destinations should be grouped in the same Elevator to eliminate the need to stop on many different floors each time. The Elevator we have coded is essentially an optimized version of elevators where floor ranges are assigned for each elevator (this method is found in many large buildings). Our Elevators have floor ranges that constantly change depending on the destinations of incoming Passengers, and also on the number of available Elevators. We believe this approach will reduce the travel time of Passengers trying to get to their floors, and it will also reduce the distance that Elevators have to travel which would hopefully reduce the amount of maintenence that has to be done.
 
 ## How It Works
