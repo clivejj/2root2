@@ -155,18 +155,18 @@ public class ControlTower {
 	}
     }//end newWave()
     
-    public void loopy(int timeToEnd, ControlTower a) {
+    public void loopy(int timeToEnd) {
 	//sets the time for the next wave
 	int nextWaveTime = 0;
 	ArrayList<Passenger> toAdd = new ArrayList<Passenger>();
-	PrintWriter data = new PrintWriter("test.csv", "UTF-8");
+	//PrintWriter data = new PrintWriter("test.csv", "UTF-8");
 	//keep running until time has reached timeToEnd
 	while (time < timeToEnd) {
 	    //declare Elevators available and empty() out their Passengers
 	    for (Elevator i : ellies) {
 		if (getTime()-i.getMoveTime() == i.calcTime()){
 		    i.available=true;
-		    toAdd.add(i.empty(a));
+		    i.empty(this);
 		}
 	    }
 	    /*  for (Integer i : indexOfAvailElevators()){
@@ -194,9 +194,10 @@ public class ControlTower {
 		    System.out.println("--------------NEW WAVE @ TIME: " + getTime() + "--------------");
 		    System.out.println(this);
 		    
-		    data.println("The first line");
+		    /*	    data.println("The first line");
 		    data.println("The second line");
 		    data.close();
+		    */
 		}
 	    }
 	    time++;
@@ -216,7 +217,7 @@ public class ControlTower {
     
     public static void main(String[] args){
 	ControlTower please = new ControlTower(20, 10, 60);
-	please.loopy(3600, please);
+	please.loopy(3600);
 	System.out.println(please.toAddToData);
     }//end main()
     

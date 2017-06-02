@@ -39,7 +39,7 @@ public class Passenger implements Comparable<Passenger> {
     }
 
     public String toString() {
-	return "" +  destination;
+	return "Destination: " +  destination + " Time: " + setTotalTime() + "\n";
     }
     
     public int setTotalTime(){
