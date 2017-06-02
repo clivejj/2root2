@@ -109,6 +109,13 @@ Clive :: Helped implement loopy() method in ControlTower
 Caleb :: Updated code so passengers are emptied. General debuggin.
 Clive :: Updated code so elevators only move when they are available. General debugging.
 ==============================================================
+2016-06-01
+--------------------------------------------------------------
+Caleb :: Started work on creating csv
+Clive :: Created new plan, created new uml
+==============================================================
+
+
 
 
 
