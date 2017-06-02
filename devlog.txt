@@ -111,8 +111,8 @@ Clive :: Updated code so elevators only move when they are available. General de
 ==============================================================
 2016-06-01
 --------------------------------------------------------------
-Caleb :: Started work on creating csv
-Clive :: Created new plan, created new uml
+Caleb :: Started work on creating csv. Updated flow.
+Clive :: Created new plan, created new uml.
 ==============================================================
 
 
