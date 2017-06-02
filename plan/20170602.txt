@@ -1,0 +1,18 @@
+2root2: Caleb Smith-Salzberg and Clive Johnston
+pd5
+
+Which jobs are most crucial?
+
+We need to verify that out current timing mechanism is running properly. We will need to do this by running lots of tests, and analyzing the resulting data.
+We must store this data (likely to be waitTime, dropoffTime, and destination) in a csv
+We must implement a real-time processing graphic to display the ranges of the Elevators (using colors and numbers), and whether or not they are moving.
+
+Which components constitute non-essential functionality?
+
+Another model Elevator (basically a regular Elevator that one might encounter) that does not have a range. We could use this as a comparison to our Elevator.
+
+What is the timeline, and how does it accommodate setbacks, course changes?
+
+6/3: Desired data fields are saved to a csv upon each simulation.
+6/5: Processing completed. A real-time graphic shows all the elevator's ranges, and whether or not they are moving.
+6/6: Non-essential functionality completed.
