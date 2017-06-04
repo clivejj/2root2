@@ -4,15 +4,16 @@ public class Elevator{
     
     private ArrayPriorityQueue<Passenger> riders;
     private int timeToEnd;
-    public boolean available;
+    private boolean available;
     //ints for min and max floors Elevator will cover
     private int minZone;
     private int maxZone;
     
-    private int currFloor;
-    
     //max floor Elevator will need to go to (based on its Passengers)
     private int maxFloor;
+
+    //time Elevator starts moving
+    private int moveTime;
     
     //true if Elevator is going down
     private boolean returning;
@@ -21,65 +22,80 @@ public class Elevator{
     private int numFloors;
 
     //true if Elevator is moving
+    //used for Processing
     private boolean moving;
-
-    //time that Elevator starts moving
-    private int moveTime;
-
+    
     public Elevator() {
 	riders = new ArrayPriorityQueue<Passenger>();
 	timeToEnd = 0;
 	available = true;
-	currFloor = 0;
-	returning = false;
 	numFloors = 0;
 	moving = false;
     }
 
-    //overloaded constructor for when passengers are already known
-    public Elevator(ArrayList<Passenger> passengers){
-	this();
-        for (Passenger i: passengers)
-            riders.add(i); //built by control tower
-    }
-    public void setMoveTime(int setMoveTime){
-	moveTime=setMoveTime;
-    }
-    public int getMoveTime(){
-	return moveTime;
-    }
-     
-    public void setRange(int setMinZone, int setMaxZone) {
-	minZone = setMinZone;
-	maxZone = setMaxZone;
-    }
-    public void setRange(int setMaxZone) {
-	maxZone = setMaxZone;
-    }	
-    public int getMinFloor(){
-	return minZone;
-    }
-    public int getMaxFloor(){
-	return maxZone;
-    }
-
+    /**********************ACCESSORS**********************/
     public ArrayPriorityQueue<Passenger> getRiders() {
 	return riders;
     }
 
-    //calulates how much time it will take Elevator to reach ground floor
-    public int calcTime(){
-        if (returning)
-            timeToEnd = currFloor * 3; //3 sec for every floor
-        else {
-            timeToEnd = ((maxFloor - currFloor) * 2) + //3 sec for every floor until it gets to maxFloor
-		((maxFloor) * 2) + //3 sec for every floor it has to gone down from maxFloor to ground
-		(riders.size()) + //1 sec for every Passenger getting off their floor
-		(numFloors * 4); //4 sec for every floor Elevator has to stop at
-	}
+    public int getTimeToEnd() {
 	return timeToEnd;
     }
-            
+    
+    public Boolean getAvailable() {
+	return available;
+    }
+
+    public int getMinZone() {
+	return minZone;
+    }
+
+    public int getMaxZone() {
+	return maxZone;
+    }
+
+    public int getMaxFloor(){
+	return maxZone;
+    }
+	
+    public int getMoveTime(){
+	return moveTime;
+    }
+    /**********************END ACCESSORS**********************/
+    
+    
+    /**********************MUTATORS**********************/
+    public void setAvailable(Boolean toSetAvailable) {
+	available = toSetAvailable;
+    }
+    
+    public void setRange(int setMinZone, int setMaxZone) {
+	minZone = setMinZone;
+	maxZone = setMaxZone;
+    }
+
+    public void setMoveTime(int setMoveTime){
+	moveTime = setMoveTime;
+    }
+    /*********************END MUTATORS**********************/
+
+    public boolean isEmpty() {
+	return riders.size() == 0;
+    }
+
+    public boolean isFull() {
+	return riders.size() == 10;
+    }
+
+    
+    //calulates how much time it will take Elevator to reach ground floor
+    public int calcTime(){
+	timeToEnd = (2 * maxFloor) * 2 + //2 sec for every floor it has to gone down from maxFloor to ground
+	    (riders.size()) + //1 sec for every Passenger getting off their floor
+	    (numFloors * 4); //4 sec for every floor Elevator has to stop at
+	return timeToEnd;
+    }//end calcTime()
+    
 
     //add Passenger to riders, and mantain maxFloor, and numFloors
     public Passenger add (Passenger a, int time) {
@@ -103,7 +119,7 @@ public class Elevator{
 	    riders.add(a);
 	}
 	return a;
-    }
+    }//end add()
     
     
     public int timeForPassenger(Passenger a){
@@ -128,22 +144,18 @@ public class Elevator{
         a.setTravelTime(total);
 	a.setTotalTime();
         return total;
-    }
-		
+    }//end timeForPassenger()
+
+
+    /*
     public void remove(){
         currFloor = riders.peekMin().getDestination();
         while (riders.peekMin().getDestination() == currFloor){
             riders.removeMin();
 	}
-    }
+    }//end remove()
+    */
 
-    public boolean isEmpty() {
-	return riders.size() == 0;
-    }
-
-    public boolean isFull() {
-	return riders.size() == 10;
-    }
         
     public String toString(){
         String rtn = "";
@@ -151,10 +163,7 @@ public class Elevator{
 	rtn += "First floor: " + minZone + "\n";
 	rtn += "Last floor: " + maxZone + "\n";
 	rtn += "Time until end: " + timeToEnd;
-	
 	return rtn;
     }
- 
-    //move method??
            
 }//end class Elevator
