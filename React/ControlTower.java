@@ -189,9 +189,10 @@ public class ControlTower {
     //runs the Elevator by sending waves of Passengers at the Elevators
     //tells Elevators to assignRanges()
     //keeps track of Elevator's movements thru time variable
-    public void loopy(int timeToEnd) {
+    public int[] loopy(int timeToEnd) {
 	//sets the time for the next wave
 	int nextWaveTime = 0;
+  int[] maxFloors = new int[ellies.size()]; //FOR PROCESSING
 	
 	//keep running until time has reached timeToEnd
 	while (time < timeToEnd) {
@@ -216,6 +217,9 @@ public class ControlTower {
 		if (a.size() >= 4) {
 		    //assignRanges to available Elevators
 		    assignRanges();
+        for (int i = 0; i<ellies.size(); i++){ //FOR PROCESSING
+          maxFloors[i] = ellies.get(i).getMaxZone();
+        }
 		    //add all Passengers to available Elevators
 		    addAllPassengers();
 		    //calculate timeToEnd for available Elevators, travelTime for Passengers
