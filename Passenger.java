@@ -6,44 +6,50 @@ public class Passenger implements Comparable<Passenger> {
     public int travelTime;
     public int totalTime;
 
-    public Passenger(int setBirthTime) {
-	destination =(int)(Math.random() * 34 + 1);
-	birthTime = setBirthTime;
-    }
-
-    //overloaded constructor when destination is already known
+    //constructor when destination is already known
     public Passenger(int setBirthTime, int setDestination) {
-	this(setBirthTime);
+	birthTime = setBirthTime;
 	destination = setDestination;
     }
-
+    
+ /**********************ACCESSORS**********************/
     public int getDestination() {
 	return destination;
+    }
+    
+    public int getBirthTime() {
+	return birthTime;
+    }
+
+    public int getWaitTime() {
+	return waitTime;
+    }
+    
+    public int getTravelTime() {
+	return travelTime;
     }
 
     public int getTotalTime() {
 	return totalTime;
     }
+    /**********************END ACCESSORS**********************/
 
-    public int getTravelTime() {
-	return travelTime;
-    }
-
+    
+    /**********************MUTATORS**********************/
     public void setWaitTime(int setWaitTime) {
 	waitTime = setWaitTime;
     }
     
-    public int getWaitTime() {
-	return waitTime;
-    }
-
-    public int getBirthTime() {
-	return birthTime;
-    }
 
     public void setTravelTime(int setTravelTime){
 	travelTime = setTravelTime;
     }
+
+    public int setTotalTime(){
+        totalTime=waitTime+travelTime;
+	return totalTime;
+    }
+    /**********************MUTATORS**********************/
     
     public int compareTo(Passenger a) {
 	return this.getDestination() - a.getDestination();
@@ -53,10 +59,6 @@ public class Passenger implements Comparable<Passenger> {
 	return destination + "," + waitTime + "," + travelTime + "," + totalTime;
     }
     
-    public int setTotalTime(){
-        totalTime=waitTime+travelTime;
-	return totalTime;
-    }
 
 }
     
