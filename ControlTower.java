@@ -166,7 +166,7 @@ public class ControlTower {
 	
 	//adds new wave of Pasengers, updates min and max if needed    
 	for (int i = 0; i < numPeople; i++) {
-	    int dest = (int)(Math.random() * maxFloor) + 2;
+	    int dest = (int)(Math.random() * (maxFloor - 1)) + 2;
 	    if (dest > max) {
 		max = dest;
 	    }
@@ -251,12 +251,80 @@ public class ControlTower {
 	catch (Exception e) {
 	    System.out.println("error");
 	}
+	//store summary statistcs in a new file, stat.csv
 	try {
 	    FileWriter b = new FileWriter("stat.csv", false);
 	    BufferedWriter writers = new BufferedWriter(b);
-	    writers.write("Destination,Mean Wait Time,Median Travel Time," +  
-			 "Mean Travel Time,Median Travel Time," + 
-			 "Mean Total Time,Median Travel Time");
+	    writers.write("Destination,Mean Wait Time,Median Wait Time," +
+			  "Mean Travel Time,Median Travel Time," +
+			  "Mean Total Time,Median TotalTime\n");
+	    
+	    //summary stats for every Passenger sorted by destination floor
+	    for (int floor = 2; floor <= maxFloor; floor++) {
+		int counter = 0;
+		
+		//find mean wait and meanTravel
+		int meanWait = 0;
+		int meanTravel = 0;
+		int meanTotal = 0;
+		//for help finding Median
+		ArrayPriorityQueue<Integer> waitData = new ArrayPriorityQueue<Integer>();
+		ArrayPriorityQueue<Integer> travelData = new ArrayPriorityQueue<Integer>();
+		ArrayPriorityQueue<Integer> totalData = new ArrayPriorityQueue<Integer>();
+		int medWait = 0;
+		int medTravel = 0;
+		int medTotal = 0;
+		for (Passenger p : data) {
+		    if (p.getDestination() == floor) {
+			meanWait += p.getWaitTime();
+			meanTravel += p.getTravelTime();
+			waitData.add(p.getWaitTime());
+			travelData.add(p.getTravelTime());
+			totalData.add(p.getTotalTime());
+			counter++;
+		    }
+		}
+		meanWait = (int) (meanWait / counter);
+		meanTravel = (int) (meanTravel / counter);
+		meanTotal = meanWait + meanTravel;
+		medWait = waitData.get(counter / 2);
+		medTravel = travelData.get(counter / 2);
+		medTotal = totalData.get(counter / 2);
+		writers.write(floor + "," + meanWait + "," + medWait + "," +
+			      meanTravel + "," + medTravel + "," +
+			      meanTotal + "," + medTotal + "\n");
+	    }
+	    
+	    //summary statistics for every Passenger
+	    int meanWait = 0;
+	    int meanTravel = 0;
+	    int meanTotal = 0;
+	    //for help finding Median
+	    ArrayPriorityQueue<Integer> waitData = new ArrayPriorityQueue<Integer>();
+	    ArrayPriorityQueue<Integer> travelData = new ArrayPriorityQueue<Integer>();
+	    ArrayPriorityQueue<Integer> totalData = new ArrayPriorityQueue<Integer>();
+	    int medWait = 0;
+	    int medTravel = 0;
+	    int medTotal = 0;
+	    
+	    for (Passenger p : data) {
+		meanWait += p.getWaitTime();
+		meanTravel += p.getTravelTime();
+		waitData.add(p.getWaitTime());
+		travelData.add(p.getTravelTime());
+		totalData.add(p.getTotalTime());
+	    }
+	    meanWait = (int) (meanWait / data.size());
+	    meanTravel = (int) (meanTravel / data.size());
+	    meanTotal = meanWait + meanTravel;
+	    medWait = waitData.get(data.size() / 2);
+	    medTravel =  travelData.get(data.size() / 2);
+	    medTotal =  totalData.get(data.size() / 2);
+	    writers.write("ALL FLOORS" + "," + meanWait + "," + medWait + "," +
+			  meanTravel + "," + medTravel + "," + 
+			  meanTotal + "," + medTotal + "\n");
+   
+	    //flush and close
 	    writers.flush();
 	    writers.close();
 	}
@@ -278,7 +346,7 @@ public class ControlTower {
 
     
     public static void main(String[] args){
-	ControlTower please = new ControlTower(20, 8, 40);
+	ControlTower please = new ControlTower(20, 10, 50);
 	please.loopy(3600);
 	please.writeData();
     }//end main()
