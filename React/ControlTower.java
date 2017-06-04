@@ -220,6 +220,7 @@ public class ControlTower {
         for (int i = 0; i<ellies.size(); i++){ //FOR PROCESSING
           maxFloors[i] = ellies.get(i).getMaxZone();
         }
+        React.setColor(maxFloors);
 		    //add all Passengers to available Elevators
 		    addAllPassengers();
 		    //calculate timeToEnd for available Elevators, travelTime for Passengers
