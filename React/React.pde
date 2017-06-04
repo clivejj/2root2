@@ -2,7 +2,6 @@ Ellie[] elevators;
 ControlTower please = new ControlTower(20, 10, 50);
 
 void setup(){
-  background(0,0,255);
   size(1200, 400);
   elevators = new Ellie[please.ellies.size()];
   int xcor = (int)(width/(2*elevators.length+1));
@@ -11,6 +10,10 @@ void setup(){
     xcor+=width/(elevators.length+1);
   }
   please.loopy(3600);
+}
+
+void draw(){
+    background(0,0,255);
 }
 
 void setColor(int[] maxes){
