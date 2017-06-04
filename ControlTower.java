@@ -239,7 +239,7 @@ public class ControlTower {
     //code from stack overflow
     public void writeData() {
 	try {
-	    FileWriter a  = new FileWriter("log.csv", false);
+	    FileWriter a  = new FileWriter("./data/log.csv", false);
 	    BufferedWriter writer = new BufferedWriter(a);
 	    writer.write("Destination,Wait Time,Travel Time,Total Time\n");
 	    for (Passenger i : data) {
@@ -253,7 +253,7 @@ public class ControlTower {
 	}
 	//store summary statistcs in a new file, stat.csv
 	try {
-	    FileWriter b = new FileWriter("stat.csv", false);
+	    FileWriter b = new FileWriter("./data/stat.csv", false);
 	    BufferedWriter writers = new BufferedWriter(b);
 	    writers.write("Destination,Mean Wait Time,Median Wait Time," +
 			  "Mean Travel Time,Median Travel Time," +
