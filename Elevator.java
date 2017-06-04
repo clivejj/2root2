@@ -72,8 +72,8 @@ public class Elevator{
         if (returning)
             timeToEnd = currFloor * 3; //3 sec for every floor
         else {
-            timeToEnd = ((maxFloor - currFloor) * 3) + //3 sec for every floor until it gets to maxFloor
-		((maxFloor) * 3) + //3 sec for every floor it has to gone down from maxFloor to ground
+            timeToEnd = ((maxFloor - currFloor) * 2) + //3 sec for every floor until it gets to maxFloor
+		((maxFloor) * 2) + //3 sec for every floor it has to gone down from maxFloor to ground
 		(riders.size()) + //1 sec for every Passenger getting off their floor
 		(numFloors * 4); //4 sec for every floor Elevator has to stop at
 	}
@@ -99,17 +99,12 @@ public class Elevator{
 	    if (!(riders.contains(a))) {
 		numFloors++;
 	    }
-	    a.setWaitTime(time);
+	    a.setWaitTime(time - a.getBirthTime());
 	    riders.add(a);
 	}
 	return a;
     }
     
-    public void empty(ControlTower tower){ //empty an elevator. Do this when elevator return (all passengers have already exited in 'real' life
-        while (riders.size()!=0){
-            tower.toAddToData.add(riders.removeMin());
-        }
-    }
     
     public int timeForPassenger(Passenger a){
         int passengersBefore=0;
@@ -131,6 +126,7 @@ public class Elevator{
 		(floorsBefore.size() * 4) + //4 sec for every floor Elevator has to stop a
         passengersBefore; //1 sec for passengers to get off
         a.setTravelTime(total);
+	a.setTotalTime();
         return total;
     }
 		

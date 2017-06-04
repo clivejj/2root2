@@ -3,7 +3,6 @@ public class Passenger implements Comparable<Passenger> {
     public int destination;
     public int birthTime;
     public int waitTime;
-    public int dropOffTime;
     public int travelTime;
     public int totalTime;
 
@@ -26,12 +25,16 @@ public class Passenger implements Comparable<Passenger> {
 	waitTime = setWaitTime;
     }
     
-    //public void setEndWaitTime(int setEndWaitTime) {
-    //	endWaitTime = setEndWaitTime;
-    //}
+    public int getWaitTime() {
+	return waitTime;
+    }
+
+    public int getBirthTime() {
+	return birthTime;
+    }
 
     public void setTravelTime(int setTravelTime){
-    travelTime = setTravelTime;
+	travelTime = setTravelTime;
     }
     
     public int compareTo(Passenger a) {
@@ -39,11 +42,11 @@ public class Passenger implements Comparable<Passenger> {
     }
 
     public String toString() {
-	return "Destination: " +  destination + " Time: " + setTotalTime() + "\n";
+	return destination + "," + waitTime + "," + travelTime + "," + totalTime;
     }
     
     public int setTotalTime(){
-        totalTime=waitTime-birthTime+travelTime;
+        totalTime=waitTime+travelTime;
 	return totalTime;
     }
 

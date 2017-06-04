@@ -1,5 +1,6 @@
 import java.util.*;
 import java.io.*;
+import java.lang.*;
 
 public class ControlTower {
     
@@ -7,7 +8,7 @@ public class ControlTower {
     //contains the Passengers that were not placed into an Elevator during the previous wave
     ArrayList<Passenger> leftover;
     ArrayList<Elevator> ellies;
-    ArrayList<Passenger> toAddToData = new ArrayList<Passenger>();
+    ArrayList<Passenger> data;
     //min and max of the destination of Passengers in people
     int min;
     int max;
@@ -25,6 +26,8 @@ public class ControlTower {
     public ControlTower(int setMaxFloor, int numElevators, int setNumPeople) {
 	people = new ArrayList<Passenger>();
 	leftover = new ArrayList<Passenger>();
+	data = new ArrayList<Passenger>();
+	
 	//populate ellies with numElevators Elevators
 	ellies = new ArrayList<Elevator>();
 	for (int i = 0; i < numElevators; i++){
@@ -135,11 +138,23 @@ public class ControlTower {
 	}
     }
 
-    //creates new wave of Passengers
-    //places Passengers into assigned Elevators, calculates times
+    //creates new wave of Passengers, adds them to People
     public void newWave() {
+	//adds Passengers from leftover, updates min and max if needed
+	while (!(leftover.isEmpty())) {
+	    int dest = leftover.get(0).getDestination();
+	    if (dest > max) {
+		max = dest;
+	    }
+	    if (dest < min) {
+		min = dest;
+	    }
+	    people.add(leftover.remove(0));
+	}
+	
+	//adds new wave of Pasengers, updates min and max if needed    
 	for (int i = 0; i < numPeople; i++) {
-	    int dest = (int)(Math.random() * maxFloor) + 1;
+	    int dest = (int)(Math.random() * maxFloor) + 2;
 	    if (dest > max) {
 		max = dest;
 	    }
@@ -148,36 +163,34 @@ public class ControlTower {
 	    }
 	    people.add(new Passenger(getTime(), dest));
 	}
-	//add Passengers from leftover back to people
-	int a = leftover.size();
-	for (int i = 0; i < a; i++) {
-	    people.add(leftover.remove(0));
-	}
     }//end newWave()
+
+    
+    //empty an elevator an adds its Passengers to data
+     public void empty(Elevator a){ 
+	 while (!(a.isEmpty())) {
+	     data.add(a.getRiders().removeMin());
+        }
+    }
     
     public void loopy(int timeToEnd) {
 	//sets the time for the next wave
 	int nextWaveTime = 0;
-	ArrayList<Passenger> toAdd = new ArrayList<Passenger>();
-	//PrintWriter data = new PrintWriter("test.csv", "UTF-8");
 	//keep running until time has reached timeToEnd
 	while (time < timeToEnd) {
 	    //declare Elevators available and empty() out their Passengers
 	    for (Elevator i : ellies) {
 		if (getTime()-i.getMoveTime() == i.calcTime()){
 		    i.available=true;
-		    i.empty(this);
+		    empty(i);
 		}
 	    }
-	    /*  for (Integer i : indexOfAvailElevators()){
-		data.println("Elevator" + i);
-		for (Passenger p : i.riders.getData()) {
-	    */	    
+
 	    //conditional: it is time for a new wave
 	    if (time == nextWaveTime) {
 		//create a new wave and assign a nextWaveTime
 		newWave();
-		nextWaveTime += (int) (Math.random() * 100);
+		nextWaveTime += (int) (200 + Math.random() * 100);
 
 		//ArrayList containing indices of available Elevators within ellies
 		ArrayList<Integer> a = indexOfAvailElevators();
@@ -191,18 +204,39 @@ public class ControlTower {
 		    for (Integer i : a) {
 			ellies.get(i).available = false;
 		    }
-		    System.out.println("--------------NEW WAVE @ TIME: " + getTime() + "--------------");
-		    System.out.println(this);
+		    //System.out.println("--------------NEW WAVE @ TIME: " + getTime() + "--------------");
+		    //System.out.println(this);
 		    
-		    /*	    data.println("The first line");
-		    data.println("The second line");
-		    data.close();
-		    */
 		}
 	    }
 	    time++;
 	}
-    }//end loopy()        
+    }//end loopy()
+
+    //writes Passenger info from data into csv file
+    //code from stack overflow
+    public void writeData() {
+	try {
+	    FileWriter a  = new FileWriter("data.csv", false);
+	    BufferedWriter writer = new BufferedWriter(a);
+	    writer.write("test");;
+	    writer.flush();
+	    writer.close();
+	}
+	catch (Exception e) {
+	    System.out.println("error");
+	}
+	/*try (FileOutputStream writer = new FileOutputStream("data.csv", false)) {
+	    writer.write("Destination,Wait Time,Travel Time,Total Time\n");
+	    for (Passenger i : data) {
+		writer.write(i + "\n");
+	    }
+	    writer.close();
+	}
+	catch (IOException e) {
+	    System.out.println("ERROR");
+	    }*/
+    }//end writeData()
         
     //overridden 
     public String toString() {
@@ -216,10 +250,14 @@ public class ControlTower {
 
     
     public static void main(String[] args){
-	ControlTower please = new ControlTower(20, 10, 60);
+	ControlTower please = new ControlTower(20, 10, 40);
 	please.loopy(3600);
-	System.out.println(please.toAddToData);
-    }//end main()
+	System.out.println("Destination,Wait Time,Travel Time,Total Time");
+	    for (Passenger i : please.data) {
+		System.out.println(i);
+	    }
+    }
+
     
 }//end class ControlTower
 
