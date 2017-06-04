@@ -239,25 +239,30 @@ public class ControlTower {
     //code from stack overflow
     public void writeData() {
 	try {
-	    FileWriter a  = new FileWriter("data.csv", false);
+	    FileWriter a  = new FileWriter("log.csv", false);
 	    BufferedWriter writer = new BufferedWriter(a);
-	    writer.write("test");;
+	    writer.write("Destination,Wait Time,Travel Time,Total Time\n");
+	    for (Passenger i : data) {
+		writer.write(i.toString() + "\n");
+	    }
 	    writer.flush();
 	    writer.close();
 	}
 	catch (Exception e) {
 	    System.out.println("error");
 	}
-	/*try (FileOutputStream writer = new FileOutputStream("data.csv", false)) {
-	    writer.write("Destination,Wait Time,Travel Time,Total Time\n");
-	    for (Passenger i : data) {
-		writer.write(i + "\n");
-	    }
-	    writer.close();
+	try {
+	    FileWriter b = new FileWriter("stat.csv", false);
+	    BufferedWriter writers = new BufferedWriter(b);
+	    writers.write("Destination,Mean Wait Time,Median Travel Time," +  
+			 "Mean Travel Time,Median Travel Time," + 
+			 "Mean Total Time,Median Travel Time");
+	    writers.flush();
+	    writers.close();
 	}
-	catch (IOException e) {
-	    System.out.println("ERROR");
-	    }*/
+	catch (Exception e) {
+	    System.out.println("error");
+	}
     }//end writeData()
 
     
@@ -273,20 +278,9 @@ public class ControlTower {
 
     
     public static void main(String[] args){
-	ControlTower please = new ControlTower(20, 10, 40);
+	ControlTower please = new ControlTower(20, 8, 40);
 	please.loopy(3600);
-	System.out.println("Destination,Wait Time,Travel Time,Total Time");
-	for (Passenger i : please.data) {
-	    System.out.println(i);
-	}
-	
-	/*
-	int sum = 0;
-	for (Passenger i : please.data) {
-	    sum += i.getTotalTime();
-	}
-	System.out.println(sum / please.data.size());
-	*/
+	please.writeData();
     }//end main()
 
 }//end class ControlTower
