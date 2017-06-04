@@ -21,6 +21,10 @@ public class Passenger implements Comparable<Passenger> {
 	return destination;
     }
 
+    public int getTotalTime() {
+	return totalTime;
+    }
+
     public void setWaitTime(int setWaitTime) {
 	waitTime = setWaitTime;
     }

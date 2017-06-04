@@ -4,7 +4,7 @@ import java.lang.*;
 
 public class ControlTower {
     //contains Passengers waiting to be placed into Elevators
-    ArrayList<Passenger> people;
+    ALQueue<Passenger> people;
     //contains the Passengers that were not placed into an Elevator during the previous wave
     ArrayList<Passenger> leftover;
     //contains all Elevators
@@ -27,7 +27,7 @@ public class ControlTower {
     
 
     public ControlTower(int setMaxFloor, int numElevators, int setNumPeople) {
-	people = new ArrayList<Passenger>();
+	people = new ALQueue<Passenger>();
 	leftover = new ArrayList<Passenger>();
 	data = new ArrayList<Passenger>();
 	
@@ -102,7 +102,7 @@ public class ControlTower {
     //adds Passenger to Elevator with corresponding range
     //if Elevator with correct floor range is already full, add Passenger back to people
     public void addPassenger() {
-	Passenger toAdd = people.remove(0);
+	Passenger toAdd = people.dequeue();
 	//ArrayList containing the indices of the Elevators in ellies that are available
 	ArrayList<Integer>indexOfAvailElevators = indexOfAvailElevators();
 	for (Integer i : indexOfAvailElevators) {
@@ -121,8 +121,7 @@ public class ControlTower {
     
     //add all Passengers in people
     public void addAllPassengers() {
-	int a = people.size();
-	for (int i = 0; i < a; i++) {
+	while (!(people.isEmpty())) {
 	    addPassenger();
 	}
 	for (Integer i : indexOfAvailElevators()) {
@@ -162,7 +161,7 @@ public class ControlTower {
 	    if (dest < min) {
 		min = dest;
 	    }
-	    people.add(leftover.remove(0));
+	    people.enqueue(leftover.remove(0));
 	}
 	
 	//adds new wave of Pasengers, updates min and max if needed    
@@ -174,7 +173,7 @@ public class ControlTower {
 	    if (dest < min) {
 		min = dest;
 	    }
-	    people.add(new Passenger(getTime(), dest));
+	    people.enqueue(new Passenger(getTime(), dest));
 	}
     }//end newWave()
 
@@ -277,9 +276,17 @@ public class ControlTower {
 	ControlTower please = new ControlTower(20, 10, 40);
 	please.loopy(3600);
 	System.out.println("Destination,Wait Time,Travel Time,Total Time");
-	    for (Passenger i : please.data) {
-		System.out.println(i);
-	    }
+	for (Passenger i : please.data) {
+	    System.out.println(i);
+	}
+	
+	/*
+	int sum = 0;
+	for (Passenger i : please.data) {
+	    sum += i.getTotalTime();
+	}
+	System.out.println(sum / please.data.size());
+	*/
     }//end main()
 
 }//end class ControlTower
