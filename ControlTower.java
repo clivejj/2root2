@@ -189,7 +189,7 @@ public class ControlTower {
     //runs the Elevator by sending waves of Passengers at the Elevators
     //tells Elevators to assignRanges()
     //keeps track of Elevator's movements thru time variable
-    public void loopy(int timeToEnd) {
+    public void loopy(int timeToEnd, int elliesNeededForAvail, int minWaveTime, int maxWaveTime) {
 	//sets the time for the next wave
 	int nextWaveTime = 0;
 	
@@ -206,14 +206,14 @@ public class ControlTower {
 
 	    //it is time for a new wave
 	    if (time == nextWaveTime) {
-		//create a new wave and assign a nextWaveTime in range [200, 299)
+		//create a new wave and assign a nextWaveTime in range [minWaveTime, maxWaveTime)
 		newWave();
-		nextWaveTime += (int) (200 + Math.random() * 100);
+		nextWaveTime += (int) (minWaveTime + Math.random() * (maxWaveTime-minWaveTime));
 
 		//for looping thru available Elevators
 		ArrayList<Integer> a = indexOfAvailElevators();
 		//if there are more than 4 available Elevators...
-		if (a.size() >= 4) {
+		if (a.size() >= elliesNeededForAvail) {
 		    //assignRanges to available Elevators
 		    assignRanges();
 		    //add all Passengers to available Elevators
@@ -237,9 +237,9 @@ public class ControlTower {
     
     //writes Passenger info from data into csv file
     //code from stack overflow
-    public void writeData() {
+    public void writeData(int availElliesNeeded) {
 	try {
-	    FileWriter a  = new FileWriter("./data/log.csv", false);
+	    FileWriter a  = new FileWriter("./data/log"+availElliesNeeded+".csv", false);
 	    BufferedWriter writer = new BufferedWriter(a);
 	    writer.write("Destination,Wait Time,Travel Time,Total Time\n");
 	    for (Passenger i : data) {
@@ -253,12 +253,12 @@ public class ControlTower {
 	}
 	//store summary statistcs in a new file, stat.csv
 	try {
-	    FileWriter b = new FileWriter("./data/stat.csv", false);
-	    BufferedWriter writers = new BufferedWriter(b);
+	    FileWriter b = new FileWriter("./data/stat"+availElliesNeeded+".csv", false);
+        BufferedWriter writers = new BufferedWriter(b);
 	    writers.write("Destination,Mean Wait Time,Median Wait Time," +
 			  "Mean Travel Time,Median Travel Time," +
 			  "Mean Total Time,Median TotalTime\n");
-	    
+	
 	    //summary stats for every Passenger sorted by destination floor
 	    for (int floor = 2; floor <= maxFloor; floor++) {
 		int counter = 0;
@@ -274,6 +274,7 @@ public class ControlTower {
 		int medWait = 0;
 		int medTravel = 0;
 		int medTotal = 0;
+        
 		for (Passenger p : data) {
 		    if (p.getDestination() == floor) {
 			meanWait += p.getWaitTime();
@@ -294,7 +295,7 @@ public class ControlTower {
 			      meanTravel + "," + medTravel + "," +
 			      meanTotal + "," + medTotal + "\n");
 	    }
-	    
+	
 	    //summary statistics for every Passenger
 	    int meanWait = 0;
 	    int meanTravel = 0;
@@ -344,11 +345,17 @@ public class ControlTower {
 	return rtn;
     }//end toString()
 
-    
+    //ControlTower(floors,ellies,ppl)
+    //loopy(time,minAvailEllies,minWaveTime,maxWaveTime)
     public static void main(String[] args){
-	ControlTower please = new ControlTower(20, 10, 50);
-	please.loopy(3600);
-	please.writeData();
+	ControlTower please = new ControlTower(50, 20, 100);
+    ControlTower yay = new ControlTower(50, 20, 100);
+        
+	please.loopy(3600, please.ellies.size()/2, 100, 100);
+	please.writeData(please.ellies.size()/2);
+        
+    yay.loopy(3600, please.ellies.size()/5, 100, 100);
+    yay.writeData(please.ellies.size()/5);
     }//end main()
 
 }//end class ControlTower
