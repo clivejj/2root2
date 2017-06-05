@@ -13,6 +13,8 @@ public class ControlTower {
     //used for storing data to write in csv
     ArrayList<Passenger> data;
     //min and max of the destination of Passengers in people
+    ArrayList<Integer> floors;
+    //list of floors visited
     int min;
     int max;
     
@@ -30,12 +32,14 @@ public class ControlTower {
 	people = new ALQueue<Passenger>();
 	leftover = new ArrayList<Passenger>();
 	data = new ArrayList<Passenger>();
-	
+	floors = new ArrayList<Integer>();
+        
 	//populate ellies with numElevators Elevators
 	ellies = new ArrayList<Elevator>();
 	for (int i = 0; i < numElevators; i++){
 	    ellies.add(new Elevator());
 	}
+    
 	//set preliminary valued for min, and max (to be changed)
 	min = setMaxFloor;
 	max = 0;
@@ -103,6 +107,9 @@ public class ControlTower {
     //if Elevator with correct floor range is already full, add Passenger back to people
     public void addPassenger() {
 	Passenger toAdd = people.dequeue();
+    if (floors.size()==0 || !floors.contains(toAdd.getDestination())){
+        floors.add(toAdd.getDestination());
+    }
 	//ArrayList containing the indices of the Elevators in ellies that are available
 	ArrayList<Integer>indexOfAvailElevators = indexOfAvailElevators();
 	for (Integer i : indexOfAvailElevators) {
@@ -247,6 +254,7 @@ public class ControlTower {
 	    }
 	    writer.flush();
 	    writer.close();
+        System.out.println("Data written to ./data/log"+availElliesNeeded+".csv");
 	}
 	catch (Exception e) {
 	    System.out.println("error");
@@ -260,9 +268,9 @@ public class ControlTower {
 			  "Mean Total Time,Median TotalTime\n");
 	
 	    //summary stats for every Passenger sorted by destination floor
-	    for (int floor = 2; floor <= maxFloor; floor++) {
+	    for (int floor : floors) { //goes through all the floors, even the ones where no passengers exist!!
 		int counter = 0;
-		
+		System.out.println(floor); //DELETE
 		//find mean wait and meanTravel
 		int meanWait = 0;
 		int meanTravel = 0;
@@ -274,7 +282,6 @@ public class ControlTower {
 		int medWait = 0;
 		int medTravel = 0;
 		int medTotal = 0;
-        
 		for (Passenger p : data) {
 		    if (p.getDestination() == floor) {
 			meanWait += p.getWaitTime();
@@ -285,6 +292,7 @@ public class ControlTower {
 			counter++;
 		    }
 		}
+        if ( counter == 0 ) System.out.println("YOU DONE FUCKED UP"); //REMOVE
 		meanWait = (int) (meanWait / counter);
 		meanTravel = (int) (meanTravel / counter);
 		meanTotal = meanWait + meanTravel;
@@ -328,6 +336,7 @@ public class ControlTower {
 	    //flush and close
 	    writers.flush();
 	    writers.close();
+        System.out.println("Data written to ./data/stat"+availElliesNeeded+".csv");
 	}
 	catch (Exception e) {
 	    System.out.println("error");
@@ -348,14 +357,15 @@ public class ControlTower {
     //ControlTower(floors,ellies,ppl)
     //loopy(time,minAvailEllies,minWaveTime,maxWaveTime)
     public static void main(String[] args){
-	ControlTower please = new ControlTower(50, 20, 100);
-    ControlTower yay = new ControlTower(50, 20, 100);
+	//ControlTower please = new ControlTower(50, 20, 10);
+    ControlTower yay = new ControlTower(50, 20, 10);
         
-	please.loopy(3600, please.ellies.size()/2, 100, 100);
-	please.writeData(please.ellies.size()/2);
+	//please.loopy(3600, please.ellies.size()/2, 10, 10);
+	//please.writeData(please.ellies.size()/2);
         
-    yay.loopy(3600, please.ellies.size()/5, 100, 100);
-    yay.writeData(please.ellies.size()/5);
+    yay.loopy(3600, yay.ellies.size()/5, 10, 10);
+    System.out.println(yay.floors); //REMOVE
+    yay.writeData(yay.ellies.size()/5);
     }//end main()
 
 }//end class ControlTower
