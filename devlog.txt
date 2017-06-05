@@ -114,6 +114,17 @@ Clive :: Updated code so elevators only move when they are available. General de
 Caleb :: Started work on creating csv. Updated flow.
 Clive :: Created new plan, created new uml.
 ==============================================================
+2016-06-03
+--------------------------------------------------------------
+Clive :: Completed update code to output csv of raw and processed data. 
+==============================================================
+2016-06-04
+--------------------------------------------------------------
+Caleb :: Attempt work at processing. Debug. Made parameters variable and updated csv output types. General cleaning.
+Clive :: Debug. General cleaning and addition of accessors and mutators.
+==============================================================
+
+
 
 
 
