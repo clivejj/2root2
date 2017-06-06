@@ -27,6 +27,9 @@ public class ControlTower {
     int time;
 
     int waitEl;
+
+    int meanTime;
+    int medianTime;
     
 
     public ControlTower(int setMaxFloor, int numElevators, int setNumPeople, int setWaitEl) {
@@ -47,6 +50,8 @@ public class ControlTower {
 	maxFloor = setMaxFloor;
 	numPeople = setNumPeople;
 	time = 0;
+	meanTime = 0;
+	medianTime = 0;
 
 	waitEl = setWaitEl;
     }//end ControlTower()
@@ -240,9 +245,9 @@ public class ControlTower {
 			    ellies.get(i).setAvailable(false);
 			}
 		    }
-		    System.out.println("--------------NEW WAVE @ TIME: " + getTime() + "--------------");
-		    System.out.println("min: " + min + " max: " + max);
-		    System.out.println(this);
+		    //System.out.println("--------------NEW WAVE @ TIME: " + getTime() + "--------------");
+		    //System.out.println("min: " + min + " max: " + max);
+		    //System.out.println(this);
 		}
 	    }
 	    //increment time
@@ -255,7 +260,7 @@ public class ControlTower {
     //code from stack overflow
     //writes Passenger info from data into csv file
     //code from stack overflow
-    public void writeData() {
+    public int writeData() {
 	try {
 	    FileWriter a  = new FileWriter("./data/log" + waitEl + ".csv", false);
 	    BufferedWriter writer = new BufferedWriter(a);
@@ -267,8 +272,9 @@ public class ControlTower {
 	    writer.close();
 	}
 	catch (Exception e) {
-	    System.out.println("errorlog");
+	    return -1;
 	}
+	
 	//store summary statistcs in a new file, stat.csv
 	try {
 	    FileWriter b = new FileWriter("./data/stat" + waitEl + ".csv", false);
@@ -341,6 +347,11 @@ public class ControlTower {
 	    medWait = waitData.get(data.size() / 2);
 	    medTravel =  travelData.get(data.size() / 2);
 	    medTotal =  totalData.get(data.size() / 2);
+
+	    //store mean and median times
+	    meanTime = meanTotal;
+	    medianTime = medTotal;
+	    
 	    writers.write("ALL FLOORS" + "," + data.size() + "," +
 			  meanWait + "," + medWait + "," +
 			  meanTravel + "," + medTravel + "," + 
@@ -351,8 +362,10 @@ public class ControlTower {
 	    writers.close();
 	}
 	catch (Exception e) {
-	    System.out.println("errorstat");
+	    return -1;
 	}
+
+	return 0;
     }//end writeData()
 
     
@@ -369,11 +382,13 @@ public class ControlTower {
     
     public static void main(String[] args){
 	ControlTower please = new ControlTower(50, 10, 50, 1);
-	please.loopy(3600);
+	please.loopy(10000);
 	please.writeData();
+
+	
 	//maxfloor, numellies, ppl, waittillthismanyellies
 	ControlTower dummy = new ControlTower(50, 20, 3, 4);
-	dummy.loopy(3600);
+	dummy.loopy(10000);
 	//System.out.println(dummy.data.size());
 	//System.out.println(dummy.data);
 	dummy.writeData();
