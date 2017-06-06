@@ -4,7 +4,7 @@ import java.lang.*;
 
 public class ControlTower {
     //contains Passengers waiting to be placed into Elevators
-    ALQueue<Passenger> people;
+    ArrayList<Passenger> people;
     //contains the Passengers that were not placed into an Elevator during the previous wave
     ArrayList<Passenger> leftover;
     //contains all Elevators
@@ -13,10 +13,9 @@ public class ControlTower {
     //used for storing data to write in csv
     ArrayList<Passenger> data;
     //min and max of the destination of Passengers in people
-    ArrayList<Integer> floors;
-    //list of floors visited
     int min;
     int max;
+    // ArrayList<Integer> floors;
     
     //how many floors are in the building
     int maxFloor;
@@ -26,20 +25,21 @@ public class ControlTower {
 
     //tracks time of system, will constantly be incrememented
     int time;
+
+    int waitEl;
     
 
-    public ControlTower(int setMaxFloor, int numElevators, int setNumPeople) {
-	people = new ALQueue<Passenger>();
+    public ControlTower(int setMaxFloor, int numElevators, int setNumPeople, int setWaitEl) {
+	people = new ArrayList<Passenger>();
 	leftover = new ArrayList<Passenger>();
 	data = new ArrayList<Passenger>();
-	floors = new ArrayList<Integer>();
-        
+	//	floors = new ArrayList<Integer>();
+	
 	//populate ellies with numElevators Elevators
 	ellies = new ArrayList<Elevator>();
 	for (int i = 0; i < numElevators; i++){
 	    ellies.add(new Elevator());
 	}
-    
 	//set preliminary valued for min, and max (to be changed)
 	min = setMaxFloor;
 	max = 0;
@@ -47,6 +47,8 @@ public class ControlTower {
 	maxFloor = setMaxFloor;
 	numPeople = setNumPeople;
 	time = 0;
+
+	waitEl = setWaitEl;
     }//end ControlTower()
 
     
@@ -86,7 +88,7 @@ public class ControlTower {
 	}
 	else{
 	    int more = (int)(floorsPerEl+1);
-	    int prevEl=0;
+	    int prevEl = min - 1;
 	    for (int i = 0; i < indexOfAvailElevators.size(); i++){
 		if (i==0)
 		    ellies.get(indexOfAvailElevators.get(i)).setRange(prevEl+1,prevEl+more);
@@ -106,10 +108,7 @@ public class ControlTower {
     //adds Passenger to Elevator with corresponding range
     //if Elevator with correct floor range is already full, add Passenger back to people
     public void addPassenger() {
-	Passenger toAdd = people.dequeue();
-    if (floors.size()==0 || !floors.contains(toAdd.getDestination())){
-        floors.add(toAdd.getDestination());
-    }
+	Passenger toAdd = people.remove(0);
 	//ArrayList containing the indices of the Elevators in ellies that are available
 	ArrayList<Integer>indexOfAvailElevators = indexOfAvailElevators();
 	for (Integer i : indexOfAvailElevators) {
@@ -119,16 +118,22 @@ public class ControlTower {
 		//if Passenger cannot be added to Elevator because it is full, add it to leftover
 		if (ellies.get(i).add(toAdd, getTime()) == null) {
 		    leftover.add(toAdd);
-		}   
+		}
+		/*else {
+		  if (!(floors.contains(toAdd.getDestination()))) {
+		  floors.add(toAdd.getDestination());
+		  }
+		  }*/
 		return;
 	    }
 	}
     }//end addPassenger()
 
     
-    //add all Passengers in people
+    //add all Passengers in people to Elevators
     public void addAllPassengers() {
-	while (!(people.isEmpty())) {
+	int a = people.size();
+	for (int i = 0; i < a; i++) {
 	    addPassenger();
 	}
 	for (Integer i : indexOfAvailElevators()) {
@@ -168,27 +173,27 @@ public class ControlTower {
 	    if (dest < min) {
 		min = dest;
 	    }
-	    people.enqueue(leftover.remove(0));
+	    people.add(leftover.remove(0));
 	}
 	
 	//adds new wave of Pasengers, updates min and max if needed    
 	for (int i = 0; i < numPeople; i++) {
-	    int dest = (int)(Math.random() * (maxFloor - 1)) + 2;
+	    int dest = (int)(Math.random() * maxFloor) + 2;
 	    if (dest > max) {
 		max = dest;
 	    }
 	    if (dest < min) {
 		min = dest;
 	    }
-	    people.enqueue(new Passenger(getTime(), dest));
+	    people.add(new Passenger(getTime(), dest));
 	}
     }//end newWave()
 
     
     //empty an elevator an adds its Passengers to data
-     public void empty(Elevator a){ 
-	 while (!(a.isEmpty())) {
-	     data.add(a.getRiders().removeMin());
+    public void empty(Elevator a){ 
+	while (!(a.isEmpty())) {
+	    data.add(a.getRiders().removeMin());
         }
     }
 
@@ -196,7 +201,7 @@ public class ControlTower {
     //runs the Elevator by sending waves of Passengers at the Elevators
     //tells Elevators to assignRanges()
     //keeps track of Elevator's movements thru time variable
-    public void loopy(int timeToEnd, int elliesNeededForAvail, int minWaveTime, int maxWaveTime) {
+    public void loopy(int timeToEnd) {
 	//sets the time for the next wave
 	int nextWaveTime = 0;
 	
@@ -204,23 +209,24 @@ public class ControlTower {
 	while (time < timeToEnd) {
 	    
 	    //declare appropriate Elevators available and empty() out their Passengers
-	    for (Elevator i : ellies) {
-		if (getTime()-i.getMoveTime() == i.calcTime()){
-		    i.setAvailable(true);
-		    empty(i);
+	    for (int i = 0; i < ellies.size(); i++) {
+		if (getTime()-ellies.get(i).getMoveTime() == ellies.get(i).calcTime()){
+		    ellies.get(i).setAvailable(true);
+		    empty(ellies.get(i));
+		    ellies.set(i, new Elevator());
 		}
 	    }
 
 	    //it is time for a new wave
 	    if (time == nextWaveTime) {
-		//create a new wave and assign a nextWaveTime in range [minWaveTime, maxWaveTime)
+		//create a new wave and assign a nextWaveTime in range [200, 299)
 		newWave();
-		nextWaveTime += (int) (minWaveTime + Math.random() * (maxWaveTime-minWaveTime));
+		nextWaveTime += (int) (100 + Math.random() * 100);
 
 		//for looping thru available Elevators
 		ArrayList<Integer> a = indexOfAvailElevators();
 		//if there are more than 4 available Elevators...
-		if (a.size() >= elliesNeededForAvail) {
+		if (a.size() >= waitEl) {
 		    //assignRanges to available Elevators
 		    assignRanges();
 		    //add all Passengers to available Elevators
@@ -230,10 +236,13 @@ public class ControlTower {
 		    calculateAllRidersTimes();
 		    //mark Elevators as unavailable
 		    for (Integer i : a) {
-			ellies.get(i).setAvailable(false);
+			if (!(ellies.get(i).isEmpty())) {
+			    ellies.get(i).setAvailable(false);
+			}
 		    }
-		    //System.out.println("--------------NEW WAVE @ TIME: " + getTime() + "--------------");
-		    //System.out.println(this);
+		    System.out.println("--------------NEW WAVE @ TIME: " + getTime() + "--------------");
+		    System.out.println("min: " + min + " max: " + max);
+		    System.out.println(this);
 		}
 	    }
 	    //increment time
@@ -244,9 +253,11 @@ public class ControlTower {
     
     //writes Passenger info from data into csv file
     //code from stack overflow
-    public void writeData(int availElliesNeeded) {
+    //writes Passenger info from data into csv file
+    //code from stack overflow
+    public void writeData() {
 	try {
-	    FileWriter a  = new FileWriter("./data/log"+availElliesNeeded+".csv", false);
+	    FileWriter a  = new FileWriter("./data/log" + waitEl + ".csv", false);
 	    BufferedWriter writer = new BufferedWriter(a);
 	    writer.write("Destination,Wait Time,Travel Time,Total Time\n");
 	    for (Passenger i : data) {
@@ -254,23 +265,23 @@ public class ControlTower {
 	    }
 	    writer.flush();
 	    writer.close();
-        System.out.println("Data written to ./data/log"+availElliesNeeded+".csv");
 	}
 	catch (Exception e) {
-	    System.out.println("error");
+	    System.out.println("errorlog");
 	}
 	//store summary statistcs in a new file, stat.csv
 	try {
-	    FileWriter b = new FileWriter("./data/stat"+availElliesNeeded+".csv", false);
-        BufferedWriter writers = new BufferedWriter(b);
-	    writers.write("Destination,Mean Wait Time,Median Wait Time," +
+	    FileWriter b = new FileWriter("./data/stat" + waitEl + ".csv", false);
+	    BufferedWriter writers = new BufferedWriter(b);
+	    writers.write("Destination,Frequency," + 
+			  "Mean Wait Time,Median Wait Time," +
 			  "Mean Travel Time,Median Travel Time," +
 			  "Mean Total Time,Median TotalTime\n");
-	
+	    
 	    //summary stats for every Passenger sorted by destination floor
-	    for (int floor : floors) { //goes through all the floors, even the ones where no passengers exist!!
+	    for (int floor = 2; floor <= maxFloor; floor++) {
 		int counter = 0;
-		System.out.println(floor); //DELETE
+		
 		//find mean wait and meanTravel
 		int meanWait = 0;
 		int meanTravel = 0;
@@ -292,18 +303,19 @@ public class ControlTower {
 			counter++;
 		    }
 		}
-        if ( counter == 0 ) System.out.println("YOU DONE FUCKED UP"); //REMOVE
-		meanWait = (int) (meanWait / counter);
-		meanTravel = (int) (meanTravel / counter);
-		meanTotal = meanWait + meanTravel;
-		medWait = waitData.get(counter / 2);
-		medTravel = travelData.get(counter / 2);
-		medTotal = totalData.get(counter / 2);
-		writers.write(floor + "," + meanWait + "," + medWait + "," +
-			      meanTravel + "," + medTravel + "," +
-			      meanTotal + "," + medTotal + "\n");
-	    }
-	
+		if (counter != 0) {
+		    meanWait = (int) (meanWait / counter);
+		    meanTravel = (int) (meanTravel / counter);
+		    meanTotal = meanWait + meanTravel;
+		    medWait = waitData.get(counter / 2);
+		    medTravel = travelData.get(counter / 2);
+		    medTotal = totalData.get(counter / 2);
+		    writers.write(floor + "," + counter + "," +  meanWait + "," + medWait + "," +
+				  meanTravel + "," + medTravel + "," +
+				  meanTotal + "," + medTotal + "\n");
+		    writers.flush();
+		}
+	    }	    
 	    //summary statistics for every Passenger
 	    int meanWait = 0;
 	    int meanTravel = 0;
@@ -329,17 +341,17 @@ public class ControlTower {
 	    medWait = waitData.get(data.size() / 2);
 	    medTravel =  travelData.get(data.size() / 2);
 	    medTotal =  totalData.get(data.size() / 2);
-	    writers.write("ALL FLOORS" + "," + meanWait + "," + medWait + "," +
+	    writers.write("ALL FLOORS" + "," + data.size() + "," +
+			  meanWait + "," + medWait + "," +
 			  meanTravel + "," + medTravel + "," + 
 			  meanTotal + "," + medTotal + "\n");
    
 	    //flush and close
 	    writers.flush();
 	    writers.close();
-        System.out.println("Data written to ./data/stat"+availElliesNeeded+".csv");
 	}
 	catch (Exception e) {
-	    System.out.println("error");
+	    System.out.println("errorstat");
 	}
     }//end writeData()
 
@@ -354,18 +366,20 @@ public class ControlTower {
 	return rtn;
     }//end toString()
 
-    //ControlTower(floors,ellies,ppl)
-    //loopy(time,minAvailEllies,minWaveTime,maxWaveTime)
+    
     public static void main(String[] args){
-	//ControlTower please = new ControlTower(50, 20, 10);
-    ControlTower yay = new ControlTower(50, 20, 10);
-        
-	//please.loopy(3600, please.ellies.size()/2, 10, 10);
-	//please.writeData(please.ellies.size()/2);
-        
-    yay.loopy(3600, yay.ellies.size()/5, 10, 10);
-    System.out.println(yay.floors); //REMOVE
-    yay.writeData(yay.ellies.size()/5);
+	ControlTower please = new ControlTower(50, 10, 50, 1);
+	please.loopy(3600);
+	please.writeData();
+	//maxfloor, numellies, ppl, waittillthismanyellies
+	ControlTower dummy = new ControlTower(50, 20, 3, 4);
+	dummy.loopy(3600);
+	//System.out.println(dummy.data.size());
+	//System.out.println(dummy.data);
+	dummy.writeData();
+	
+
+	
     }//end main()
 
 }//end class ControlTower
