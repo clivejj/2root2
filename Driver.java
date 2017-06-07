@@ -10,7 +10,7 @@ public class Driver {
 	System.out.print("How many floors would you like your building to have? ");
 	floors = Keyboard.readInt();;
 
-	System.out.print("How many Elevators would you like in your smart Elevator system? " );
+	System.out.print("How many Elevators would you like in your smart Elevator system (>= 6) ? " );
 	ellies = Keyboard.readInt();
 
 	System.out.print("Finally, how many Passengers would you like to send every wave? ");
