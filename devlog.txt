@@ -1,34 +1,41 @@
 2root2
 Caleb Smith-Salzberg and Clive Johnston
 pd5
-Smartlevetator
+Smart Elevator
 
 /////////// Zone of Reflection \\\\\\\\\\\
 ------------------------------------------
 OBSTACLES OVERCOME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 wow we so BOSS bc...
-The elevator we created has many moving parts and was super hard to visualize. Although we did not expect this, we accepted the challenge. Our utilization of KtS was exemplary, and we were able to solve most of our issues.
+- The elevator we created has many moving parts and was super hard to visualize. Although we did not expect this, we accepted the challenge. Our utilization of KtS was exemplary, and we were able to solve most of our issues.
+- Specifically we were having issues bringing together all the different parts, and to have them interact with each other at the right time. We fixed this by creating a timer in ControlTower, and every Elevator and Passenger is aware of when they were created, how long they have until they reach the end. This allows them to interact with each other properly. 
+
 
 UNRESOLVED ISSUES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 blah blah pesky bug...
-We have not figured out when it is optimal to reassign ranges. In our elevator, when a new wave of people come, the passengers are only accepted when x number of elevators are available. We believe that when waves are coming very frequently, elevators should wait until there are more available elevators available until they reassign ranges. This way, each elevator would have a smaller range of floors to visit. For example, if 50 floors must be visited, and ranges are reassigned when only one elvator is available, that elevator would have a range of 2-50. If it were to wait until 10 elevators are available, each elevator would only have five floors in its range.
+- We have not figured out when it is optimal to reassign ranges. In our elevator, when a new wave of people come, the passengers are only accepted when a variable number of elevators are available. We believe that when waves are coming very frequently, elevators should wait until there are more available elevators available until they reassign ranges. This way, each elevator would have a smaller range of floors to visit. For example, if 50 floors must be visited, and ranges are reassigned when only one elvator is available, that elevator would have a range of 2-50. If it were to wait until 10 elevators are available, each elevator would only have five floors in its range.
 We were not able to reach a definitive answer to this. The problem truly is an optimization one in that if more elvators are waited for, wait times increase, but travel times decrease.
+- Also, the Smart Elevator system we designed is only actually smart when there is a large (number of floors) : (number of Elevators) ratio (as close to 1 as possible), and when each wave sends about 5 people for every Elevator there is. If there are not enough Elevators, or if there are too many people, the "dummy" Elevator will often actually be faster. This is also because the "dummy" Elevator actually isn't totally dumb - it's actually pretty smart. In creating the dummy Elevator we used the same template as we had for the Smart Elevator, because creating a truly "dummy" Elevator would have taken a lot of extra work. 
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Elevators are quite complicated! Smart elevators are rare, but we believe they are necessary, especially in larger buildings.
+- Elevators are quite complicated! Smart elevators are rare, but we believe they are necessary, especially in larger buildings.
+- Writing to files in Java is very easy
+- Being able to look at a huge spreadsheet of data you generated is very very satisfying
 
 MID-DEVELOPMENT DESIGN CHANGES
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 we changed ___ to ___ bc...
+- We didn't have any major design changes. The biggest thing we did was implement the timing mechanism. We hadn't really planned to do this, but we realized it was going to need to be done. It was something we def should have seen coming, and we should have originally planned for it. 
 
 LESSONS LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 tales of wisdom gained...
-It is of the utmost importance to organize before beginning to code. We felt that this semester we planned more than any other semester's final project. Still, more preperation before putting fingers to keys would have proved extremely valuable.
-Don't slack on making accessors and mutators, even if you don't think you need them. You probably will need them at some point (like us).
+- It is of the utmost importance to organize before beginning to code. We felt that this semester we planned more than any other semester's final project. Still, more preperation before putting fingers to keys would have proved extremely valuable.
+- Don't slack on making accessors and mutators, even if you don't think you need them. You probably will need them at some point (like us).
+- Also, make sure you have actually done a task correctly before moving on to something else. We had this problem with data generating in the csv. We just saw code that wasn't giving any errors, and a bunch of data being produced, so we thought everything was alright, and we moved on. Later, upon inspecting the data, we leanred we were totally wrong, and we had to backtrack a considerable amount. Lesson: Just because you really want something to be working properly, that doesn't mean it will actually will be. 
 
 ||||||||||||||||||||||||||||||||||||||||||
 
@@ -132,8 +139,14 @@ Clive :: Debug. General cleaning and addition of accessors and mutators.
 2016-06-05
 --------------------------------------------------------------
 Caleb :: Partially fixed bug where the csv would not be generated due to what we believe is a divide by zero error.
-Clive :: 
+Clive :: Lots of debugging. Fixed error due to Elevator's data not being reset properly after each wave. Started Driver file
 ==============================================================
+2016-06-06
+--------------------------------------------------------------
+Caleb :: 
+Clive :: Debugging in class. Finished Driver file. Updated ReadMe
+==============================================================
+
 
 
 
