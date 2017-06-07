@@ -19,6 +19,7 @@ blah blah pesky bug...
 We were not able to reach a definitive answer to this. The problem truly is an optimization one in that if more elvators are waited for, wait times increase, but travel times decrease.
 - Also, the Smart Elevator system we designed is only actually smart when there is a large (number of floors) : (number of Elevators) ratio (as close to 1 as possible), and when each wave sends about 5 people for every Elevator there is. If there are not enough Elevators, or if there are too many people, the "dummy" Elevator will often actually be faster. This is also because the "dummy" Elevator actually isn't totally dumb - it's actually pretty smart. In creating the dummy Elevator we used the same template as we had for the Smart Elevator, because creating a truly "dummy" Elevator would have taken a lot of extra work. 
 - Also, because of the randomness of the destinations, there is a lot of variation. So if you run a simulation and get 10% improvement, you could run it again, and get -30% improvement. This isn't really a bug, more just due to the random nature of destinations. 
+- Also, the frequency of people going to higher floors is generally smaller than that of those going to lower floors. This is because the simulation cuts off after a set time, so many of the people going to higher floors get esentially stuck. If we allowed them to come back down, then the frequencys should be more evenly distributed across floors. 
 
 COOL STUFF LEARNED
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
