@@ -146,7 +146,7 @@ Clive :: Lots of debugging. Fixed error due to Elevator's data not being reset p
 ==============================================================
 2016-06-06
 --------------------------------------------------------------
-Caleb :: 
+Caleb :: Debugging in class. Clean up files. Updates to files.
 Clive :: Debugging in class. Finished Driver file. Updated ReadMe
 ==============================================================
 
