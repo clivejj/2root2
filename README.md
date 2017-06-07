@@ -16,9 +16,16 @@ We feel the waves of Passengers closely represent a building's traffic, but it w
 
 
 ## To Launch:
-1. Clone the repository: ```git clone git@github.com:clivejj/2root2.git```
-2. Navigate to the correct directory: ```cd 2root2```
-3. View a sample csv containing data from a simulation.
-4. Run graphic that accompanies data.
-5. Run a new simulation (may take some time to run)
+1. Open a terminal session
+2. Clone the repository: ```$ git clone git@github.com:clivejj/2root2.git```
+3. Navigate to the correct directory: ```$ cd 2root2```
+4. Compile and run the program: ```$ javac Driver.java``` ```$ java Driver```
+5. Follow prompts on screen, and enter appropriate integers
+6. When the program terminates, navigate to the data directory: ```$ cd data```
+7. Open the data you would like to view: 
+  * ```log1.csv``` contains useful data from every single Passenger in the dummy Elevator
+  * ```stat1.csv``` contains summary statistics for Passengers in the dummy Elevator
+  * ```log[INT].csv``` contains useful data from every single Passenger in your Smart Elevator
+  * ```stat[INT].csv``` contains summary statistics for Passengers in your Smart Elevator
+  
 NOTE: 3-5 does not exist with the current code
